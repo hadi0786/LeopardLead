@@ -19,7 +19,7 @@ import ServicesSections from "./leopardservices";
 import { TextParallaxContentExample } from "./myservices";
 import { cn } from "@/lib/utils";
 import { OrbitingCirclesDemo } from "./components/PluginComponents/CircleOrbit"; // Add missing import
-
+import RotatingText from "../components/ui/RotatingText";
 const socialMediaLinks = [
   { icon: <FaFacebook />, name: "Facebook", link: "#" },
   { icon: <FaInstagram />, name: "Instagram", link: "#" },
@@ -130,18 +130,19 @@ const Home = () => {
         <div className="">
           <h1 className="stroke">US</h1>
           <div className="para">
-            <div className="flex gap-2">
-              {content.map((_, index) => (
-                <div key={index} onClick={() => setButtonActive(index + 1)}>
-                  <ShinyButton
-                    className={`${
-                      buttonActive === index + 1 ? "bg-[#F1C40F]" : "bg-gray-300"
-                    } mt-[1.6rem]`}
-                    text={content[index].title}
-                  />
-                </div>
-              ))}
-            </div>
+            <div class="about-heading">
+ Our <RotatingText
+  texts={['Vision', 'Goal', 'Motive']}
+  mainClassName="px-2 sm:px-2 md:px-3 bg-cyan-300 text-black overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
+  staggerFrom={"last"}
+  initial={{ y: "100%" }}
+  animate={{ y: 0 }}
+  exit={{ y: "-120%" }}
+  staggerDuration={0.025}
+  splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+  transition={{ type: "spring", damping: 30, stiffness: 400 }}
+  rotationInterval={3000}
+/></div>
             <div className="mt-2">
               {content[buttonActive - 1]?.text}
             </div>

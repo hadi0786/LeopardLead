@@ -16,6 +16,12 @@
   line-height: 0.8;
 }
 
+.about-heading{
+width: 20%;
+display: grid;
+align-items: center;
+}
+
 .animate-marqueeLeft {
   animation: marqueeLeft 150s linear infinite;
 }
