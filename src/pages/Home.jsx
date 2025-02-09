@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import React, { useEffect, useRef, useState } from "react";
 import "../Styles/home.css";
+import Example from "./Blogs";
 import {
   FaFacebook,
   FaGithub,
@@ -107,7 +108,7 @@ const Home = () => {
       {width > 900 ? (
   // Desktop Version
   <div className="flex md:flex-row flex-col bg-white items-center text-center">
-    <div className="mx-auto py-10 h-[70vh] w-[100%] flex">
+    <div className="mx-auto py-10 h-[60vh] w-[100%] flex">
       {/* Vertical line animation */}
       
       {/* Content Section */}
@@ -125,27 +126,26 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Main Content */}
-        <h1 className="about">ABOUT</h1>
-        <div className="">
-          <h1 className="stroke">US</h1>
-          <div className="para">
-            <div class="about-heading">
- Our <RotatingText
-  texts={['Vision', 'Goal', 'Motive']}
-  mainClassName="px-2 sm:px-2 md:px-3 bg-cyan-300 text-black overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
-  staggerFrom={"last"}
-  initial={{ y: "100%" }}
-  animate={{ y: 0 }}
-  exit={{ y: "-120%" }}
-  staggerDuration={0.025}
-  splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
-  transition={{ type: "spring", damping: 30, stiffness: 400 }}
-  rotationInterval={3000}
-/></div>
-            <div className="mt-2">
-              {content[buttonActive - 1]?.text}
-            </div>
+ {/* Main Content */}
+ <div className="relative z-10 text-center">
+          <div className="flex justify-center items-center gap-2 mb-8">
+            <h1 className="about text-6xl text-black font-bold">OUR</h1>
+            <RotatingText
+              texts={['MISSION', 'VISION', 'GOALS']}
+              mainClassName="px-4 text-6xl font-bold text-[#f1c40f]"
+              staggerFrom="last"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "-120%" }}
+              staggerDuration={0.025}
+              splitLevelClassName="overflow-hidden"
+              transition={{ type: "spring", damping: 30, stiffness: 400 }}
+              rotationInterval={5000}
+              onRotate={(index) => setButtonActive(index + 1)}
+            />
+          </div>
+          <div className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+            {content[buttonActive - 1]?.text}
           </div>
         </div>
       </div>
@@ -156,22 +156,18 @@ const Home = () => {
   <div className="bg-white py-12 px-4">
     <div className="max-w-2xl mx-auto">
       <h1 className="text-4xl font-bold mb-8 text-center">ABOUT US</h1>
+      <div className="flex justify-center gap-2 mb-6">
+        <RotatingText
+          texts={['MISSION', 'VISION', 'GOALS']}
+          mainClassName="text-lg font-medium bg-[#f1c40f] text-black px-4 py-2 rounded-full"
+          rotationInterval={5000}
+          onRotate={(index) => setButtonActive(index + 1)}
+        />
+      </div>
       <div className="space-y-6">
-        {content.map((item, index) => (
-          <div key={index} className="text-center">
-            <button
-              onClick={() => setButtonActive(index + 1)}
-              className={`px-6 py-3 rounded-full text-sm font-medium transition-colors ${
-                buttonActive === index + 1
-                  ? 'bg-[#F1C40F] text-black'
-                  : 'bg-gray-200 text-gray-700'
-              }`}
-            >
-              {item.title}
-            </button>
-            <p className="mt-4 text-gray-600">{item.text}</p>
-          </div>
-        ))}
+        <p className="text-gray-600 text-center">
+          {content[buttonActive - 1]?.text}
+        </p>
       </div>
     </div>
   </div>
@@ -179,6 +175,7 @@ const Home = () => {
       {/* Services Section */}
       <TextParallaxContentExample></TextParallaxContentExample>
       <ServicesSections></ServicesSections>
+<Example></Example>
 
       {/* Contact Section */}
       <section className="bg-neutral-900 py-20 text-white">
