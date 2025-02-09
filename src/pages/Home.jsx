@@ -173,9 +173,32 @@ const Home = () => {
   </div>
 )}
       {/* Services Section */}
-      <TextParallaxContentExample></TextParallaxContentExample>
+      <div className="mb-16 bg-white"> {/* Added margin-bottom (mb-16) and bg-white */}
+  <div className="flex justify-center items-center bg-white gap-2 mb-8">
+    <h1 className="about text-6xl text-black font-bold">OUR</h1>
+    <RotatingText
+      texts={['SERVICES']}
+      mainClassName="px-4 text-6xl font-bold text-[#f1c40f]"
+      staggerFrom="last"
+      initial={{ y: "100%" }}
+      animate={{ y: 0 }}
+      exit={{ y: "-120%" }}
+      staggerDuration={0.025}
+      splitLevelClassName="overflow-hidden"
+      transition={{ type: "spring", damping: 30, stiffness: 400 }}
+      rotationInterval={5000}
+      onRotate={(index) => setButtonActive(index + 1)}
+    />
+  </div>
+  <div className="bg-white mb-25"> {/* Ensures TextParallaxContentExample also has a white background */}
+    <TextParallaxContentExample />
+  </div>
+  <div class="h-[30vh] bg-white"></div>
+  <Example></Example>
+  <div className="bg-white mt-15">
       <ServicesSections></ServicesSections>
-<Example></Example>
+  </div>
+</div>
 
       {/* Contact Section */}
       <section className="bg-neutral-900 py-20 text-white">

@@ -1,112 +1,205 @@
-import React, { useEffect, useRef, useState } from "react";
-import ShinyButton from "@/components/magicui/shiny-button";
-let num=1;
-const AboutUS = () => {
-  const [selectedOptions, setSelectedOptions] = useState([]);
-  const [buttonActive,setButtonActive]=useState(1)
-  const [content,setContent]=useState(["At Leopard Leads IT Solution, our mission is to drive measurable growth for businesses with innovative, high-impact digital solutions. Through expert web and app development, targeted digital marketing services, and cutting-edge AI and VR technologies, we empower companies to reach new heights. We’re committed to making success faster, smarter, and more accessible for businesses ready to lead in the digital age.",
-    "Our vision at Leopard Leads IT Solution is to become a leading force in transforming businesses through innovative technology and strategic digital solutions. We aim to set the standard in web and app development, digital marketing services, and advanced AI and VR services, helping businesses adapt, thrive, and lead in a rapidly evolving digital world. We envision a future where every business has the tools and support to maximize growth and unlock limitless potential.",
-    "At Leopard Leads IT Solution, our goals are to fuel business growth through cutting-edge digital solutions, lead in digital marketing, AI, VR, web, and app innovation, and deliver exceptional client experiences. We aim to expand our reach across the UAE and beyond, offering sustainable, cost-effective solutions that drive long-term value for our clients."
-    
-  ])
+import { ReactLenis } from "lenis/dist/lenis-react";
+import {
+  motion,
+  useMotionTemplate,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import { SiSpacex } from "react-icons/si";
+import { FiArrowRight, FiMapPin } from "react-icons/fi";
+import { useRef } from "react";
+import { TextParallaxContentExample } from "./myservices";
 
-  const [top, setTop] = useState(0); // Initialize the top position
-  const dotRef = useRef(null); // Create a reference for the dot
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTop((prevTop) => {
-        // If the dot reaches the bottom, reset to the top
-        if (prevTop >= 410) {
-          return 0;
-        }
-        // Move the dot down by 2 pixels
-        return prevTop + 2;
-      });
-    }, 50); // Adjust the speed by changing the interval time
-
-    return () => clearInterval(interval); // Clean up the interval on unmount
-  }, []);
-//   useEffect(() => {
-//     // Use setTimeout to update the message after 2000 milliseconds (2 seconds)
-
-// setTimeout(() => {
-//   num=num+1
-//       setButtonActive(num);
-//     }, 5000);
-//     if(num>3){
-//       setButtonActive(1);
-//       num=1
-//     }
-//   }, [num]);
-console.log(buttonActive,"buttonActive")
+export const SmoothScrollHero = () => {
   return (
-    <div className=" mx-auto pxPadding py-20 mt-24   flex bg-white">
-   <div
-      className="vl1"
-      style={{
-        borderLeft: "8px solid #1118270d",
-        height: "410px",
-        width:"30px",
-        position: "relative",
-        // overflow: "hidden"
-      }}
-    >
-      <div
-        ref={dotRef}
-        style={{
-          position: "absolute",
-          top: `${top}px`, // Use state to set the top position
-          left: "-8px", // Center the dot over the line
-          width: "8px",
-          height: "48px",
-          backgroundColor: "#F1C40F",
-          // borderRadius: "50%",
-          transition: "top 0.1s linear" // Optional: Smooth transition
+    <div className="bg-white-950">
+      <ReactLenis
+        root
+        options={{
+          // Learn more -> https://github.com/darkroomengineering/lenis?tab=readme-ov-file#instance-settings
+          lerp: 0.05,
+          //   infinite: true,
+          //   syncTouch: true,
         }}
-      ></div>
-    </div> {/* //Animation */}
-    <h1 className="about">ABOUT</h1>
-    <div className="">
-      <h1 className="stroke">US</h1>
-      <div className="para">
-        <div className="flex gap-2">
-          <div onClick={()=>{setButtonActive(1),console.log(buttonActive)}} >
-        <ShinyButton className={`${buttonActive===1?`bg-[#5046e6]`:`bg-[#201d3b]`} mt-[1.6rem]`}text="Our Vision" 
-        
-        ></ShinyButton>
-        </div>
-        {/* <ShinyButton
-  className='bg-[#201d3b] hover:bg-[#5046e6] mt-[1.6rem]'
-  text="Our Mission"
-  
-/> */}
-<div onClick={()=>{setButtonActive(2),console.log(buttonActive)}} >
-<ShinyButton
-  // className='bg-[#201d3b] hover:bg-[#5046e6] mt-[1.6rem]'
-  className={`${buttonActive===2?`bg-[#5046e6]`:`bg-[#201d3b]`} mt-[1.6rem]`}
-  text="Our Vision"
-  
->
-  </ShinyButton>
-  </div>
-<div onClick={()=>{setButtonActive(3),console.log(buttonActive)}} >
-
-
-<ShinyButton
-  className={`${buttonActive===3?`bg-[#5046e6]`:`bg-[#201d3b]`} mt-[1.6rem]`}
->
-  </ShinyButton>
-
-  </div>
-        {/* <ShinyButton className={`${buttonActive===2?`bg-[#5046e6]`:`bg-[#201d3b]`} mt-[1.6rem]`} text="Explore" ></ShinyButton>
-        <ShinyButton className={`${buttonActive===3?`bg-[#5046e6]`:`bg-[#201d3b]`} mt-[1.6rem]`} text=" Explore" ></ShinyButton> */}
-     </div>
-        {content[buttonActive-1]}
-      </div>
+      >
+        <Hero />
+        <TextParallaxContentExample></TextParallaxContentExample>
+      </ReactLenis>
     </div>
-  </div>
   );
 };
 
-export default AboutUS;
+const Nav = () => {
+  return (
+    <nav className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-6 py-3 text-white">
+      <SiSpacex className="text-3xl mix-blend-difference" />
+      <button
+        onClick={() => {
+          document.getElementById("launch-schedule")?.scrollIntoView({
+            behavior: "smooth",
+          });
+        }}
+        className="flex items-center gap-1 text-xs text-zinc-400"
+      >
+        LAUNCH SCHEDULE <FiArrowRight />
+      </button>
+    </nav>
+  );
+};
+
+const SECTION_HEIGHT = 1500;
+
+const Hero = () => {
+  return (
+    <div
+      style={{ height: `calc(${SECTION_HEIGHT}px + 100vh)` }}
+      className="relative w-full"
+    >
+      <CenterImage />
+
+      <ParallaxImages />
+
+      <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-b from-white-950/0 to-white-950" />
+    </div>
+  );
+};
+
+const CenterImage = () => {
+  const { scrollY } = useScroll();
+
+  const clip1 = useTransform(scrollY, [0, 1500], [25, 0]);
+  const clip2 = useTransform(scrollY, [0, 1500], [75, 100]);
+
+  const clipPath = useMotionTemplate`polygon(${clip1}% ${clip1}%, ${clip2}% ${clip1}%, ${clip2}% ${clip2}%, ${clip1}% ${clip2}%)`;
+
+  const backgroundSize = useTransform(
+    scrollY,
+    [0, SECTION_HEIGHT + 500],
+    ["170%", "100%"]
+  );
+  const opacity = useTransform(
+    scrollY,
+    [SECTION_HEIGHT, SECTION_HEIGHT + 500],
+    [1, 0]
+  );
+
+  return (
+    <motion.div
+      className="sticky top-0 h-screen w-full"
+      style={{
+        clipPath,
+        backgroundSize,
+        opacity,
+        backgroundImage:
+          "url(https://images.unsplash.com/photo-1460186136353-977e9d6085a1?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    />
+  );
+};
+
+const ParallaxImages = () => {
+  return (
+    <div className="mx-auto max-w-5xl px-4 pt-[200px]">
+      <ParallaxImg
+        src="https://images.unsplash.com/photo-1484600899469-230e8d1d59c0?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="And example of a space launch"
+        start={-200}
+        end={200}
+        className="w-1/3"
+      />
+      <ParallaxImg
+        src="https://images.unsplash.com/photo-1446776709462-d6b525c57bd3?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="An example of a space launch"
+        start={200}
+        end={-250}
+        className="mx-auto w-2/3"
+      />
+      <ParallaxImg
+        src="https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?q=80&w=2370&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="Orbiting satellite"
+        start={-200}
+        end={200}
+        className="ml-auto w-1/3"
+      />
+      <ParallaxImg
+        src="https://images.unsplash.com/photo-1494022299300-899b96e49893?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="Orbiting satellite"
+        start={0}
+        end={-500}
+        className="ml-24 w-5/12"
+      />
+    </div>
+  );
+};
+
+const ParallaxImg = ({ className, alt, src, start, end }) => {
+  const ref = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: [`${start}px end`, `end ${end * -1}px`],
+  });
+
+  const opacity = useTransform(scrollYProgress, [0.75, 1], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0.75, 1], [1, 0.85]);
+
+  const y = useTransform(scrollYProgress, [0, 1], [start, end]);
+  const transform = useMotionTemplate`translateY(${y}px) scale(${scale})`;
+
+  return (
+    <motion.img
+      src={src}
+      alt={alt}
+      className={className}
+      ref={ref}
+      style={{ transform, opacity }}
+    />
+  );
+};
+
+const Schedule = () => {
+  return (
+    <section
+      id="launch-schedule"
+      className="mx-auto max-w-5xl px-4 py-48 bg-white text-black"
+    >
+      <motion.h1
+        initial={{ y: 48, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ ease: "easeInOut", duration: 0.75 }}
+        className="mb-20 text-4xl font-black uppercase text-zinc-50"
+      >
+        Launch Schedule
+      </motion.h1>
+      <ScheduleItem title="NG-21" date="Dec 9th" location="Florida" />
+      <ScheduleItem title="Starlink" date="Dec 20th" location="Texas" />
+      <ScheduleItem title="Starlink" date="Jan 13th" location="Florida" />
+      <ScheduleItem title="Turksat 6A" date="Feb 22nd" location="Florida" />
+      <ScheduleItem title="NROL-186" date="Mar 1st" location="California" />
+      <ScheduleItem title="GOES-U" date="Mar 8th" location="California" />
+      <ScheduleItem title="ASTRA 1P" date="Apr 8th" location="Texas" />
+    </section>
+  );
+};
+
+const ScheduleItem = ({ title, date, location }) => {
+  return (
+    <motion.div
+      initial={{ y: 48, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{ ease: "easeInOut", duration: 0.75 }}
+      className="mb-9 flex items-center justify-between border-b border-zinc-800 px-3 pb-9"
+    >
+      <div>
+        <p className="mb-1.5 text-xl text-zinc-50">{title}</p>
+        <p className="text-sm uppercase text-zinc-500">{date}</p>
+      </div>
+      <div className="flex items-center gap-1.5 text-end text-sm uppercase text-zinc-500">
+        <p>{location}</p>
+        <FiMapPin />
+      </div>
+    </motion.div>
+  );
+};

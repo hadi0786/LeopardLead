@@ -10,21 +10,18 @@ export const TextParallaxContentExample = () => {
         subheading="Collaborate"
         heading="Built for all of us."
       >
-        <ExampleContent />
       </TextParallaxContent>
       <TextParallaxContent
         imgUrl="https://images.unsplash.com/photo-1530893609608-32a9af3aa95c?q=80&w=2564&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         subheading="Quality"
         heading="Never compromise."
       >
-        <ExampleContent />
       </TextParallaxContent>
       <TextParallaxContent
         imgUrl="https://images.unsplash.com/photo-1504610926078-a1611febcad3?q=80&w=2416&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         subheading="Modern"
         heading="Dress for the best."
       >
-        <ExampleContent />
       </TextParallaxContent>
     </div>
   );
@@ -40,7 +37,7 @@ const TextParallaxContent = ({ imgUrl, subheading, heading, children }) => {
         paddingRight: IMG_PADDING,
       }}
     >
-      <div className="relative h-[150vh]">
+      <div className="relative h-[70vh]">
         <StickyImage imgUrl={imgUrl} />
         <OverlayCopy heading={heading} subheading={subheading} />
       </div>
@@ -101,10 +98,10 @@ const OverlayCopy = ({ subheading, heading }) => {
       ref={targetRef}
       className="absolute left-0 top-0 flex h-screen w-full flex-col items-center justify-center text-white"
     >
+    <p className="text-center text-4xl font-bold md:text-7xl">{heading}</p>
       <p className="mb-2 text-center text-xl md:mb-4 md:text-3xl">
         {subheading}
       </p>
-      <p className="text-center text-4xl font-bold md:text-7xl">{heading}</p>
     </motion.div>
   );
 };
