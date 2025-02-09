@@ -16,6 +16,7 @@ import Work from "./OurWork";
 import { GlobeDemo } from "./components/PluginComponents/Globe";
 import useWindowSize from "../windowsize";
 import ServicesSections from "./leopardservices";
+import { TextParallaxContentExample } from "./myservices";
 import { cn } from "@/lib/utils";
 import { OrbitingCirclesDemo } from "./components/PluginComponents/CircleOrbit"; // Add missing import
 
@@ -103,95 +104,79 @@ const Home = () => {
         </div>
       </section>
 
-      {width > 900 && (
-        <div className="flex md:flex-row flex-col bg-white">
-          <div className="mx-auto py-10 w-[60%] flex">
-            <div
-              className="vl1"
-              style={{
-                borderLeft: "8px solid #1118270d",
-                height: "410px",
-                width: "30px",
-                position: "relative",
-              }}
-            >
-              <style>
-                {`
-                  @keyframes moveTopToBottom {
-                    0% { top: 0; }
-                    50% { top: calc(100% - 48px); }
-                    100% { top: 0; }
-                  }
-                `}
-              </style>
-              <div
-                style={{
-                  position: "absolute",
-                  left: "-12px",
-                  width: "15px",
-                  height: "48px",
-                  borderRadius: "10%",
-                  backgroundColor: "#F1C40F",
-                  animation: "moveTopToBottom 8s ease-in-out infinite",
-                }}
-              ></div>
-            </div>
-            <div className="px-4">
-              <h1 className="about">ABOUT</h1>
-              <div className="">
-                <h1 className="stroke">US</h1>
-                <div className="para">
-                  <div className="flex gap-2">
-                    <div onClick={() => setButtonActive(1)}>
-                      <ShinyButton
-                        className={`${
-                          buttonActive === 1 ? "bg-[#F1C40F]" : "bg-gray-300"
-                        } mt-[1.6rem]`}
-                        text="Our Mission"
-                      />
-                    </div>
-                    <div onClick={() => setButtonActive(2)}>
-                      <ShinyButton
-                        className={`${
-                          buttonActive === 2 ? "bg-[#F1C40F]" : "bg-gray-300"
-                        } mt-[1.6rem]`}
-                        text="Our Vision"
-                      />
-                    </div>
-                    <div onClick={() => setButtonActive(3)}>
-                      <ShinyButton
-                        className={`${
-                          buttonActive === 3 ? "bg-[#F1C40F]" : "bg-gray-300"
-                        } mt-[1.6rem]`}
-                        text="Our Goals"
-                      />
-                    </div>
-                  </div>
-                  <div className="mt-2">
-                    {content[buttonActive - 1]?.text}
-                  </div>
-                </div>
-              </div>
-            </div>
+      {width > 900 ? (
+  // Desktop Version
+  <div className="flex md:flex-row flex-col bg-white items-center text-center">
+    <div className="mx-auto py-10 h-[70vh] w-[100%] flex">
+      {/* Vertical line animation */}
+      
+      {/* Content Section */}
+      <div className="px-3 relative overflow-hidden w-full">
+        {/* Animated Text Elements */}
+        <div className="absolute top-0 left-0 w-full flex flex-col items-center gap-0 overflow-hidden">
+          <div className="marquee animate-marqueeLeft text-9xl font-bold opacity-10 text-gray-400 whitespace-nowrap min-w-full leading-none">
+            INNOVATION · INNOVATION · INNOVATION · INNOVATION · INNOVATION · 
           </div>
-          <div className="w-[40%]">
-            <OrbitingCirclesDemo />
+          <div className="marquee animate-marqueeRight text-9xl font-bold opacity-10 text-gray-400 whitespace-nowrap min-w-full leading-none">
+            TRANSFORMING · TRANSFORMING · TRANSFORMING · TRANSFORMING · TRANSFORMING · 
+          </div>
+          <div className="marquee animate-marqueeLeft text-9xl font-bold opacity-10 text-gray-400 whitespace-nowrap min-w-full leading-none">
+            DIGITAL · DIGITAL · DIGITAL · DIGITAL · DIGITAL · DIGITAL · 
           </div>
         </div>
-      )}
 
-      {/* Services Section */}
-      <section className="bg-black py-20">
-        <div className="container mx-auto px-4">
-          <div className="mb-16 text-center">
-            <h2 className="text-4xl font-bold uppercase tracking-widest text-white">
-              Our Services
-            </h2>
-            <div className="mx-auto mt-4 h-1 w-24 bg-[#f1c40f]" />
+        {/* Main Content */}
+        <h1 className="about">ABOUT</h1>
+        <div className="">
+          <h1 className="stroke">US</h1>
+          <div className="para">
+            <div className="flex gap-2">
+              {content.map((_, index) => (
+                <div key={index} onClick={() => setButtonActive(index + 1)}>
+                  <ShinyButton
+                    className={`${
+                      buttonActive === index + 1 ? "bg-[#F1C40F]" : "bg-gray-300"
+                    } mt-[1.6rem]`}
+                    text={content[index].title}
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="mt-2">
+              {content[buttonActive - 1]?.text}
+            </div>
           </div>
-          <ServicesSection />
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+) : (
+  // Mobile Version
+  <div className="bg-white py-12 px-4">
+    <div className="max-w-2xl mx-auto">
+      <h1 className="text-4xl font-bold mb-8 text-center">ABOUT US</h1>
+      <div className="space-y-6">
+        {content.map((item, index) => (
+          <div key={index} className="text-center">
+            <button
+              onClick={() => setButtonActive(index + 1)}
+              className={`px-6 py-3 rounded-full text-sm font-medium transition-colors ${
+                buttonActive === index + 1
+                  ? 'bg-[#F1C40F] text-black'
+                  : 'bg-gray-200 text-gray-700'
+              }`}
+            >
+              {item.title}
+            </button>
+            <p className="mt-4 text-gray-600">{item.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+)}
+      {/* Services Section */}
+      <TextParallaxContentExample></TextParallaxContentExample>
       <ServicesSections></ServicesSections>
 
       {/* Contact Section */}
