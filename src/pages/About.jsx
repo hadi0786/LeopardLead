@@ -1,205 +1,119 @@
-import { ReactLenis } from "lenis/dist/lenis-react";
-import {
-  motion,
-  useMotionTemplate,
-  useScroll,
-  useTransform,
-} from "framer-motion";
-import { SiSpacex } from "react-icons/si";
-import { FiArrowRight, FiMapPin } from "react-icons/fi";
-import { useRef } from "react";
-import { TextParallaxContentExample } from "./myservices";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion"; // Fixed import
+import RotatingText from "../components/ui/RotatingText";
 
-export const SmoothScrollHero = () => {
-  return (
-    <div className="bg-white-950">
-      <ReactLenis
-        root
-        options={{
-          // Learn more -> https://github.com/darkroomengineering/lenis?tab=readme-ov-file#instance-settings
-          lerp: 0.05,
-          //   infinite: true,
-          //   syncTouch: true,
-        }}
-      >
-        <Hero />
-        <TextParallaxContentExample></TextParallaxContentExample>
-      </ReactLenis>
-    </div>
-  );
-};
+export const DrawCircleText = () => {
+  const [width, setWidth] = useState(window.innerWidth);
+  const [buttonActive, setButtonActive] = useState(1);
 
-const Nav = () => {
-  return (
-    <nav className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-6 py-3 text-white">
-      <SiSpacex className="text-3xl mix-blend-difference" />
-      <button
-        onClick={() => {
-          document.getElementById("launch-schedule")?.scrollIntoView({
-            behavior: "smooth",
-          });
-        }}
-        className="flex items-center gap-1 text-xs text-zinc-400"
-      >
-        LAUNCH SCHEDULE <FiArrowRight />
-      </button>
-    </nav>
-  );
-};
+  // Handling window resize
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-const SECTION_HEIGHT = 1500;
-
-const Hero = () => {
-  return (
-    <div
-      style={{ height: `calc(${SECTION_HEIGHT}px + 100vh)` }}
-      className="relative w-full"
-    >
-      <CenterImage />
-
-      <ParallaxImages />
-
-      <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-b from-white-950/0 to-white-950" />
-    </div>
-  );
-};
-
-const CenterImage = () => {
-  const { scrollY } = useScroll();
-
-  const clip1 = useTransform(scrollY, [0, 1500], [25, 0]);
-  const clip2 = useTransform(scrollY, [0, 1500], [75, 100]);
-
-  const clipPath = useMotionTemplate`polygon(${clip1}% ${clip1}%, ${clip2}% ${clip1}%, ${clip2}% ${clip2}%, ${clip1}% ${clip2}%)`;
-
-  const backgroundSize = useTransform(
-    scrollY,
-    [0, SECTION_HEIGHT + 500],
-    ["170%", "100%"]
-  );
-  const opacity = useTransform(
-    scrollY,
-    [SECTION_HEIGHT, SECTION_HEIGHT + 500],
-    [1, 0]
-  );
+  // Define content array
+  const content = [
+    { text: "Our mission is to revolutionize marketing with innovation." },
+    { text: "Our vision is to lead the digital transformation globally." },
+    { text: "Our goals are to drive impactful results for our clients." },
+  ];
 
   return (
-    <motion.div
-      className="sticky top-0 h-screen w-full"
-      style={{
-        clipPath,
-        backgroundSize,
-        opacity,
-        backgroundImage:
-          "url(https://images.unsplash.com/photo-1460186136353-977e9d6085a1?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    />
-  );
-};
-
-const ParallaxImages = () => {
-  return (
-    <div className="mx-auto max-w-5xl px-4 pt-[200px]">
-      <ParallaxImg
-        src="https://images.unsplash.com/photo-1484600899469-230e8d1d59c0?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        alt="And example of a space launch"
-        start={-200}
-        end={200}
-        className="w-1/3"
-      />
-      <ParallaxImg
-        src="https://images.unsplash.com/photo-1446776709462-d6b525c57bd3?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        alt="An example of a space launch"
-        start={200}
-        end={-250}
-        className="mx-auto w-2/3"
-      />
-      <ParallaxImg
-        src="https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?q=80&w=2370&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        alt="Orbiting satellite"
-        start={-200}
-        end={200}
-        className="ml-auto w-1/3"
-      />
-      <ParallaxImg
-        src="https://images.unsplash.com/photo-1494022299300-899b96e49893?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        alt="Orbiting satellite"
-        start={0}
-        end={-500}
-        className="ml-24 w-5/12"
-      />
-    </div>
-  );
-};
-
-const ParallaxImg = ({ className, alt, src, start, end }) => {
-  const ref = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: [`${start}px end`, `end ${end * -1}px`],
-  });
-
-  const opacity = useTransform(scrollYProgress, [0.75, 1], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0.75, 1], [1, 0.85]);
-
-  const y = useTransform(scrollYProgress, [0, 1], [start, end]);
-  const transform = useMotionTemplate`translateY(${y}px) scale(${scale})`;
-
-  return (
-    <motion.img
-      src={src}
-      alt={alt}
-      className={className}
-      ref={ref}
-      style={{ transform, opacity }}
-    />
-  );
-};
-
-const Schedule = () => {
-  return (
-    <section
-      id="launch-schedule"
-      className="mx-auto max-w-5xl px-4 py-48 bg-white text-black"
-    >
-      <motion.h1
-        initial={{ y: 48, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ ease: "easeInOut", duration: 0.75 }}
-        className="mb-20 text-4xl font-black uppercase text-zinc-50"
-      >
-        Launch Schedule
-      </motion.h1>
-      <ScheduleItem title="NG-21" date="Dec 9th" location="Florida" />
-      <ScheduleItem title="Starlink" date="Dec 20th" location="Texas" />
-      <ScheduleItem title="Starlink" date="Jan 13th" location="Florida" />
-      <ScheduleItem title="Turksat 6A" date="Feb 22nd" location="Florida" />
-      <ScheduleItem title="NROL-186" date="Mar 1st" location="California" />
-      <ScheduleItem title="GOES-U" date="Mar 8th" location="California" />
-      <ScheduleItem title="ASTRA 1P" date="Apr 8th" location="Texas" />
-    </section>
-  );
-};
-
-const ScheduleItem = ({ title, date, location }) => {
-  return (
-    <motion.div
-      initial={{ y: 48, opacity: 0 }}
-      whileInView={{ y: 0, opacity: 1 }}
-      transition={{ ease: "easeInOut", duration: 0.75 }}
-      className="mb-9 flex items-center justify-between border-b border-zinc-800 px-3 pb-9"
-    >
-      <div>
-        <p className="mb-1.5 text-xl text-zinc-50">{title}</p>
-        <p className="text-sm uppercase text-zinc-500">{date}</p>
+    <div>
+      <div className="grid place-content-center bg-emerald-950 px-4 py-24 text-yellow-50">
+        <h1 className="max-w-2xl text-center text-5xl leading-snug">
+          Scale your{" "}
+          <span className="relative">
+            Marketing
+            <svg
+              viewBox="0 0 286 73"
+              fill="none"
+              className="absolute -left-2 -right-2 -top-2 bottom-0 translate-y-1"
+            >
+              <motion.path
+                initial={{ pathLength: 0 }}
+                whileInView={{ pathLength: 1 }}
+                transition={{
+                  duration: 1.25,
+                  ease: "easeInOut",
+                }}
+                d="M142.293 1C106.854 16.8908 6.08202 7.17705 1.23654 43.3756C-2.10604 68.3466 29.5633 73.2652 122.688 71.7518C215.814 70.2384 316.298 70.689 275.761 38.0785C230.14 1.37835 97.0503 24.4575 52.9384 1"
+                stroke="#FACC15"
+                strokeWidth="3"
+              />
+            </svg>
+          </span>{" "}
+          with Leopard Leads
+        </h1>
       </div>
-      <div className="flex items-center gap-1.5 text-end text-sm uppercase text-zinc-500">
-        <p>{location}</p>
-        <FiMapPin />
-      </div>
-    </motion.div>
+
+      {width > 900 ? (
+        // Desktop Version
+        <div className="flex md:flex-row flex-col bg-neutral-50 items-center text-center">
+          <div className="mx-auto py-10 h-[60vh] w-[100%] flex">
+            {/* Content Section */}
+            <div className="px-3 relative overflow-hidden w-full">
+              {/* Animated Text Elements */}
+              <div className="absolute top-0 left-0 w-full flex flex-col items-center gap-0 overflow-hidden">
+                <div className="marquee animate-marqueeLeft text-9xl font-bold opacity-10 text-gray-400 whitespace-nowrap min-w-full leading-none">
+                  INNOVATION · INNOVATION · INNOVATION · 
+                </div>
+                <div className="marquee animate-marqueeRight text-9xl font-bold opacity-10 text-gray-400 whitespace-nowrap min-w-full leading-none">
+                  TRANSFORMING · TRANSFORMING · TRANSFORMING · 
+                </div>
+                <div className="marquee animate-marqueeLeft text-9xl font-bold opacity-10 text-gray-400 whitespace-nowrap min-w-full leading-none">
+                  DIGITAL · DIGITAL · DIGITAL · 
+                </div>
+              </div>
+
+              {/* Main Content */}
+              <div className="relative z-10 text-center">
+                <div className="flex justify-center items-center gap-2 mb-8">
+                  <h1 className="about text-6xl text-black font-bold">OUR</h1>
+                  <RotatingText
+                    texts={["MISSION", "VISION", "GOALS"]}
+                    mainClassName="px-4 text-6xl font-bold text-[#f1c40f]"
+                    staggerFrom="last"
+                    initial={{ y: "100%" }}
+                    animate={{ y: 0 }}
+                    exit={{ y: "-120%" }}
+                    staggerDuration={0.025}
+                    splitLevelClassName="overflow-hidden"
+                    transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                    rotationInterval={5000}
+                    onRotate={(index) => setButtonActive(index + 1)}
+                  />
+                </div>
+                <div className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                  {content[buttonActive - 1]?.text}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        // Mobile Version
+        <div className="bg-white py-12 px-4">
+          <div className="max-w-2xl mx-auto">
+            <h1 className="text-4xl font-bold mb-8 text-center">ABOUT US</h1>
+            <div className="flex justify-center gap-2 mb-6">
+              <RotatingText
+                texts={["MISSION", "VISION", "GOALS"]}
+                mainClassName="text-lg font-medium bg-[#f1c40f] text-black px-4 py-2 rounded-full"
+                rotationInterval={5000}
+                onRotate={(index) => setButtonActive(index + 1)}
+              />
+            </div>
+            <div className="space-y-6">
+              <p className="text-gray-600 text-center">
+                {content[buttonActive - 1]?.text}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };

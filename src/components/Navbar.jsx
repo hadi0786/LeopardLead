@@ -9,7 +9,8 @@ const navOptions = [
   { path: "/", text: "Home" },
   { path: "/about", text: "About" },
   { path: "/services", text: "Services" },
-  { path: "/ourWork", text: "Our Work" },
+  { path: "/ourWork", text: "Projects" },
+  { path: "/SAAS-Solutions", text: "SAAS Solutions" },
   { path: "/blogs", text: "Blogs" },
 ];
 
@@ -81,12 +82,12 @@ const Navbar = () => {
   return (
     <>
       {width > 900 && (
-        <header className="fixed w-full font-poppins top-0 z-50 bg-black/15 hover:bg-black/20 transition-all duration-300 border-b border-black/15">
+        <header className="w-full font-poppins z-50 bg-black hover:bg-black backdrop-blur-lg transition-all duration-300 border-b border-black/15">
           <nav className="flex w-full justify-between items-center container mx-auto h-28 px-8">
-            {/* Larger Logo */}
+            {/* Increased logo size */}
             <img
               src="/images/logo.png"
-              className="w-[22em] animate_01 h-28 object-contain transition-transform duration-300 hover:scale-110 cursor-pointer"
+              className="logo-nav animate_01 object-contain transition-transform duration-300 hover:scale-110 cursor-pointer"
               alt="Logo"
             />
 
@@ -115,9 +116,9 @@ const Navbar = () => {
             </section>
           </nav>
 
-          {/* Enhanced Services Dropdown with FA Icons */}
+          {/* Services Dropdown */}
           {showHover && (
-            <div className="absolute w-full bg-black/30 backdrop-blur-xl border-t border-gray/30 shadow-2xl">
+            <div className="w-full bg-black/30 backdrop-blur-xl border-t border-gray/30 shadow-2xl">
               <div className="max-w-7xl mx-auto px-8 py-8">
                 <div className="grid grid-cols-4 gap-8">
                   <div className="col-span-1 border-r border-gray-700 pr-8">
@@ -172,13 +173,13 @@ const Navbar = () => {
       )}
 
       {width < 900 && (
-        <nav className="fixed top-0 left-0 right-0 bg-black z-50 border-b border-gray-800">
+        <nav className="bg-black z-50 border-b border-black-800">
           <div className="max-w-7xl mx-auto px-6">
             <div className="flex items-center justify-between h-24">
-              {/* Larger Mobile Logo */}
+              {/* Adjusted mobile logo size */}
               <img
                 src="/images/logo.png"
-                className="w-[16em] h-24 object-contain transition-transform duration-300 hover:scale-105"
+                className="w-[8em] h-24 object-contain transition-transform duration-300 hover:scale-105"
                 alt="Logo"
               />
 

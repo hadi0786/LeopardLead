@@ -1,130 +1,203 @@
-import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { FiArrowUpRight } from "react-icons/fi";
+import React, { useState } from "react";
 
-export const TextParallaxContentExample = () => {
-  return (
-    <div className="bg-white">
-      <TextParallaxContent
-        imgUrl="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        subheading="Collaborate"
-        heading="Built for all of us."
-      >
-      </TextParallaxContent>
-      <TextParallaxContent
-        imgUrl="https://images.unsplash.com/photo-1530893609608-32a9af3aa95c?q=80&w=2564&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        subheading="Quality"
-        heading="Never compromise."
-      >
-      </TextParallaxContent>
-      <TextParallaxContent
-        imgUrl="https://images.unsplash.com/photo-1504610926078-a1611febcad3?q=80&w=2416&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        subheading="Modern"
-        heading="Dress for the best."
-      >
-      </TextParallaxContent>
-    </div>
-  );
+const servicesData = {
+  "Web Development": {
+    title: "Web Development Service",
+    description:
+      "Build modern, responsive websites with cutting-edge technologies.",
+    videoId: "9No-FiEInLA"
+  },
+  "UI/UX Design": {
+    title: "UI/UX Design Service",
+    description: "Create intuitive user experiences with stunning interfaces.",
+    videoId: "dQw4w9WgXcQ"
+  },
+  SEO: {
+    title: "SEO Optimization",
+    description: "Boost your search rankings and drive organic traffic.",
+    videoId: "9bZkp7q19f0"
+  }
 };
 
-const IMG_PADDING = 12;
+// Helper function that returns a service-specific icon.
+// The `colorClass` prop allows the parent to control the icon's color dynamically.
+const getServiceIcon = (service, colorClass) => {
+  switch (service) {
+    case "Web Development":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className={`w-6 h-6 transition-colors duration-300 ${colorClass}`}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          {/* Code brackets icon */}
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M16 18l6-6-6-6M8 6l-6 6 6 6"
+          />
+        </svg>
+      );
+    case "UI/UX Design":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className={`w-6 h-6 transition-colors duration-300 ${colorClass}`}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          {/* Pencil icon */}
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15.232 5.232a2.5 2.5 0 113.536 3.536L7 21H3v-4L15.232 5.232z"
+          />
+        </svg>
+      );
+    case "SEO":
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className={`w-6 h-6 transition-colors duration-300 ${colorClass}`}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          {/* Magnifying glass icon */}
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"
+          />
+        </svg>
+      );
+    default:
+      return null;
+  }
+};
 
-const TextParallaxContent = ({ imgUrl, subheading, heading, children }) => {
+const MyServiceSection = () => {
+  const [selectedService, setSelectedService] = useState("Web Development");
+
   return (
-    <div
-      style={{
-        paddingLeft: IMG_PADDING,
-        paddingRight: IMG_PADDING,
-      }}
-    >
-      <div className="relative h-[70vh]">
-        <StickyImage imgUrl={imgUrl} />
-        <OverlayCopy heading={heading} subheading={subheading} />
+    <div className="bg-white min-h-screen p-8 md:p-12 lg:p-16">
+      {/* Header Section */}
+      <div className="text-center mb-12">
+        <h1 className="text-3xl md:text-4xl font-bold text-[#545454] mb-4 animate-fade-in-down">
+          {servicesData[selectedService].title}
+        </h1>
+        <p className="text-[#545454] text-lg md:text-xl max-w-2xl mx-auto animate-fade-in-up">
+          {servicesData[selectedService].description}
+        </p>
       </div>
-      {children}
+
+      {/* Main Content */}
+      <div className="relative max-w-7xl mx-auto">
+        {/* Left Side Icons (Desktop) */}
+        <div className="hidden md:flex flex-col gap-8 absolute left-0 top-1/2 -translate-y-1/2 z-10">
+          {Object.keys(servicesData).map((service) => (
+            <div
+              key={service}
+              className="flex items-center gap-4 group cursor-pointer"
+              onClick={() => setSelectedService(service)}
+            >
+              <div
+                className={`w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg ${
+                  selectedService === service
+                    ? "ring-4 ring-blue-500 ring-opacity-50 bg-blue-50"
+                    : "hover:bg-blue-50"
+                }`}
+              >
+                {getServiceIcon(
+                  service,
+                  selectedService === service ? "text-blue-600" : "text-gray-600"
+                )}
+              </div>
+              <span className="text-sm font-medium text-gray-600 transition-all duration-300 group-hover:text-blue-600 group-hover:scale-105">
+                {service}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* Discount Badge (Desktop) */}
+        <div
+          className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 bg-white p-10 rounded-xl shadow-2xl z-30
+          transform transition-all duration-300 hover:-translate-y-1/3 hover:shadow-2xl"
+        >
+          <div className="text-center">
+            <div className="text-2xl font-bold text-[#545454] mb-2 animate-pulse">
+              Save 50% OFF
+            </div>
+            <button className="bg-[#545454] text-white px-6 py-2 rounded-lg hover:bg-[#555555] transition-all duration-300 hover:scale-105 active:scale-95">
+              Contact Us
+            </button>
+          </div>
+        </div>
+
+        {/* Main Card */}
+        <div
+          className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mx-auto max-w-3xl relative transform transition-all duration-300 hover:shadow-2xl"
+        >
+          {/* Video Container */}
+          <div
+            className="aspect-video bg-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:scale-[1.005] relative group"
+          >
+            <iframe
+              className="w-full h-full transform transition-all duration-500 group-hover:scale-105"
+              src={`https://www.youtube.com/embed/${servicesData[selectedService].videoId}`}
+              title="Demo video"
+              allowFullScreen
+            />
+            <div
+              className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            />
+          </div>
+        </div>
+
+        {/* Mobile Elements */}
+        <div className="md:hidden mt-8">
+          {/* Mobile Icons */}
+          <div className="flex justify-center gap-4 mb-8">
+            {Object.keys(servicesData).map((service) => (
+              <div
+                key={service}
+                className={`w-12 h-12 rounded-full shadow-md flex items-center justify-center transition-all duration-300 hover:scale-110 cursor-pointer ${
+                  selectedService === service
+                    ? "bg-blue-600 ring-4 ring-blue-300"
+                    : "bg-white hover:bg-blue-50"
+                }`}
+                onClick={() => setSelectedService(service)}
+              >
+                {getServiceIcon(
+                  service,
+                  selectedService === service ? "text-white" : "text-gray-600"
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Mobile Discount Badge */}
+          <div
+            className="bg-white p-6 rounded-xl shadow-lg text-center mb-8 transform transition-all duration-300 hover:scale-105"
+          >
+            <div className="text-xl font-bold text-blue-600 mb-2 animate-pulse">
+              Save 50% OFF
+            </div>
+            <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all duration-300 active:scale-95">
+              Contact Us
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-const StickyImage = ({ imgUrl }) => {
-  const targetRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-    offset: ["end end", "end start"],
-  });
-
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.85]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
-
-  return (
-    <motion.div
-      style={{
-        backgroundImage: `url(${imgUrl})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        height: `calc(100vh - ${IMG_PADDING * 2}px)`,
-        top: IMG_PADDING,
-        scale,
-      }}
-      ref={targetRef}
-      className="sticky z-0 overflow-hidden rounded-3xl"
-    >
-      <motion.div
-        className="absolute inset-0 bg-neutral-950/70"
-        style={{
-          opacity,
-        }}
-      />
-    </motion.div>
-  );
-};
-
-const OverlayCopy = ({ subheading, heading }) => {
-  const targetRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-    offset: ["start end", "end start"],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [250, -250]);
-  const opacity = useTransform(scrollYProgress, [0.25, 0.5, 0.75], [0, 1, 0]);
-
-  return (
-    <motion.div
-      style={{
-        y,
-        opacity,
-      }}
-      ref={targetRef}
-      className="absolute left-0 top-0 flex h-screen w-full flex-col items-center justify-center text-white"
-    >
-    <p className="text-center text-4xl font-bold md:text-7xl">{heading}</p>
-      <p className="mb-2 text-center text-xl md:mb-4 md:text-3xl">
-        {subheading}
-      </p>
-    </motion.div>
-  );
-};
-
-const ExampleContent = () => (
-  <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 pb-24 pt-12 md:grid-cols-12">
-    <h2 className="col-span-1 text-3xl font-bold md:col-span-4">
-      Additional content explaining the above card here
-    </h2>
-    <div className="col-span-1 md:col-span-8">
-      <p className="mb-4 text-xl text-neutral-600 md:text-2xl">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi,
-        blanditiis soluta eius quam modi aliquam quaerat odit deleniti minima
-        maiores voluptate est ut saepe accusantium maxime doloremque nulla
-        consectetur possimus.
-      </p>
-      <p className="mb-8 text-xl text-neutral-600 md:text-2xl">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium
-        reiciendis blanditiis aliquam aut fugit sint.
-      </p>
-      <button className="w-full rounded bg-neutral-900 px-9 py-4 text-xl text-white transition-colors hover:bg-neutral-700 md:w-fit">
-        Learn more <FiArrowUpRight className="inline" />
-      </button>
-    </div>
-  </div>
-);
+export default MyServiceSection;

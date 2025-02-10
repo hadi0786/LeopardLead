@@ -8,7 +8,7 @@ import Footer from "../../components/Footer";
 import Blog from "../../pages/Blog";
 import ContactUs from "../../pages/ContactUs";
 import Services from "../../pages/Services";
-import { SmoothScrollHero } from "../../pages/About";
+import { DrawCircleText } from "../../pages/About";
 import Work from "../../pages/OurWork";
 import ServiceSection from "../../pages/ServicesSection";
 
@@ -21,7 +21,7 @@ const index = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<SmoothScrollHero />} />
+        <Route path="/about" element={<DrawCircleText />} />
         <Route path="/blogs" element={<Blog />} />
         <Route path="/ourWork" element={<Work />} />
         <Route path="/contact-us" element={<ContactUs />} />

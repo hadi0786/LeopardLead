@@ -1,10 +1,11 @@
 import { useGSAP } from "@gsap/react";
-import ShinyButton from "@/components/magicui/shiny-button";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import React, { useEffect, useRef, useState } from "react";
 import "../Styles/home.css";
 import Example from "./Blogs";
+import FeatureCarousel from "./whychooseus";
+import PartnersSection from "./brands";
 import {
   FaFacebook,
   FaGithub,
@@ -12,15 +13,13 @@ import {
   FaLinkedin,
   FaWhatsapp,
 } from "react-icons/fa";
-import ServicesSection from "./components/ServicesSection";
-import Work from "./OurWork";
-import { GlobeDemo } from "./components/PluginComponents/Globe";
 import useWindowSize from "../windowsize";
-import ServicesSections from "./leopardservices";
-import { TextParallaxContentExample } from "./myservices";
-import { cn } from "@/lib/utils";
-import { OrbitingCirclesDemo } from "./components/PluginComponents/CircleOrbit"; // Add missing import
+import MyServiceSection from "./myservices";
+import ServicesSection from "./leopardservices";
 import RotatingText from "../components/ui/RotatingText";
+
+gsap.registerPlugin(ScrollTrigger);
+
 const socialMediaLinks = [
   { icon: <FaFacebook />, name: "Facebook", link: "#" },
   { icon: <FaInstagram />, name: "Instagram", link: "#" },
@@ -32,15 +31,15 @@ const socialMediaLinks = [
 const content = [
   {
     title: "Our Mission",
-    text: "At Leopard Leads IT Solution, our mission is to drive measurable growth for businesses with innovative, high-impact digital solutions...",
+    text: "At Leopard Leads IT Solution, our mission is to drive measurable growth for businesses with innovative, high-impact digital solutions.",
   },
   {
     title: "Our Vision",
-    text: "Our vision at Leopard Leads IT Solution is to become a leading force in transforming businesses through innovative technology...",
+    text: "Our vision at Leopard Leads IT Solution is to become a leading force in transforming businesses through innovative technology.",
   },
   {
     title: "Our Goals",
-    text: "At Leopard Leads IT Solution, our goals are to fuel business growth through cutting-edge digital solutions...",
+    text: "At Leopard Leads IT Solution, our goals are to fuel business growth through cutting-edge digital solutions.",
   },
 ];
 
@@ -72,7 +71,7 @@ const Home = () => {
   }, []);
 
   return (
-    <main className="bg-neutral-900">
+    <main className="bg-white-900">
       {/* Hero Section */}
       <section className="relative h-screen bg-neutral-900">
         <video
@@ -106,99 +105,105 @@ const Home = () => {
       </section>
 
       {width > 900 ? (
-  // Desktop Version
-  <div className="flex md:flex-row flex-col bg-white items-center text-center">
-    <div className="mx-auto py-10 h-[60vh] w-[100%] flex">
-      {/* Vertical line animation */}
-      
-      {/* Content Section */}
-      <div className="px-3 relative overflow-hidden w-full">
-        {/* Animated Text Elements */}
-        <div className="absolute top-0 left-0 w-full flex flex-col items-center gap-0 overflow-hidden">
-          <div className="marquee animate-marqueeLeft text-9xl font-bold opacity-10 text-gray-400 whitespace-nowrap min-w-full leading-none">
-            INNOVATION · INNOVATION · INNOVATION · INNOVATION · INNOVATION · 
-          </div>
-          <div className="marquee animate-marqueeRight text-9xl font-bold opacity-10 text-gray-400 whitespace-nowrap min-w-full leading-none">
-            TRANSFORMING · TRANSFORMING · TRANSFORMING · TRANSFORMING · TRANSFORMING · 
-          </div>
-          <div className="marquee animate-marqueeLeft text-9xl font-bold opacity-10 text-gray-400 whitespace-nowrap min-w-full leading-none">
-            DIGITAL · DIGITAL · DIGITAL · DIGITAL · DIGITAL · DIGITAL · 
-          </div>
-        </div>
+        // Desktop Version
+        <div className="flex md:flex-row flex-col bg-white items-center text-center">
+          <div className="mx-auto py-10 h-[55vh] w-full flex">
+            <div className="px-3 relative overflow-hidden w-full">
+            <div class="containers">
+    <div class="marquee marquee-left">
+      <div class="marquee__inner">
+        <span>
+          INNOVATION · INNOVATION · INNOVATION · INNOVATION · INNOVATION ·
+        </span>
+        <span>
+          INNOVATION · INNOVATION · INNOVATION · INNOVATION · INNOVATION ·
+        </span>
+      </div>
+    </div>
+    <div class="marquee marquee-right">
+      <div class="marquee__inner">
+        <span>
+          TRANSFORMING · TRANSFORMING · TRANSFORMING · TRANSFORMING · TRANSFORMING ·
+        </span>
+        <span>
+          TRANSFORMING · TRANSFORMING · TRANSFORMING · TRANSFORMING · TRANSFORMING ·
+        </span>
+      </div>
+    </div>
+    <div class="marquee marquee-left">
+      <div class="marquee__inner">
+        <span>
+          DIGITAL · DIGITAL · DIGITAL · DIGITAL · DIGITAL · DIGITAL ·
+        </span>
+        <span>
+          DIGITAL · DIGITAL · DIGITAL · DIGITAL · DIGITAL · DIGITAL ·
+        </span>
+      </div>
+    </div>
+  </div>
 
- {/* Main Content */}
- <div className="relative z-10 text-center">
-          <div className="flex justify-center items-center gap-2 mb-8">
-            <h1 className="about text-6xl text-black font-bold">OUR</h1>
-            <RotatingText
-              texts={['MISSION', 'VISION', 'GOALS']}
-              mainClassName="px-4 text-6xl font-bold text-[#f1c40f]"
-              staggerFrom="last"
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "-120%" }}
-              staggerDuration={0.025}
-              splitLevelClassName="overflow-hidden"
-              transition={{ type: "spring", damping: 30, stiffness: 400 }}
-              rotationInterval={5000}
-              onRotate={(index) => setButtonActive(index + 1)}
-            />
-          </div>
-          <div className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-            {content[buttonActive - 1]?.text}
+              <div className="relative z-10 text-center">
+                <div className="flex justify-center items-center gap-2 mb-8">
+                  <h1 className="text-9xl text-[#545454] font-bold">OUR</h1>
+                  <RotatingText
+                    texts={['MISSION', 'VISION', 'GOALS']}
+                    mainClassName="px-4 text-9xl font-bold text-[#f1c40f]"
+                    staggerFrom="last"
+                    initial={{ y: "100%" }}
+                    animate={{ y: 0 }}
+                    exit={{ y: "-120%" }}
+                    staggerDuration={0.025}
+                    splitLevelClassName="overflow-hidden"
+                    transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                    rotationInterval={5000}
+                    onRotate={(index) => setButtonActive(index + 1)}
+                  />
+                </div>
+                <div className="mt-4 text-4xl text-[#545454]-600 max-w-6xl mx-auto">
+                  {content[buttonActive - 1]?.text}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-) : (
-  // Mobile Version
-  <div className="bg-white py-12 px-4">
-    <div className="max-w-2xl mx-auto">
-      <h1 className="text-4xl font-bold mb-8 text-center">ABOUT US</h1>
-      <div className="flex justify-center gap-2 mb-6">
-        <RotatingText
-          texts={['MISSION', 'VISION', 'GOALS']}
-          mainClassName="text-lg font-medium bg-[#f1c40f] text-black px-4 py-2 rounded-full"
-          rotationInterval={5000}
-          onRotate={(index) => setButtonActive(index + 1)}
-        />
-      </div>
-      <div className="space-y-6">
-        <p className="text-gray-600 text-center">
-          {content[buttonActive - 1]?.text}
-        </p>
-      </div>
-    </div>
-  </div>
-)}
+      ) : (
+        // Mobile Version
+        <div className="bg-white py-12 px-4">
+          <div className="max-w-2xl mx-auto">
+            <h1 className="text-4xl font-bold mb-8 text-center">ABOUT US</h1>
+            <div className="flex justify-center gap-2 mb-6">
+              <RotatingText
+                texts={['MISSION', 'VISION', 'GOALS']}
+                mainClassName="text-lg font-medium bg-[#f1c40f] text-black px-4 py-2 rounded-full"
+                rotationInterval={5000}
+                onRotate={(index) => setButtonActive(index + 1)}
+              />
+            </div>
+            <div className="space-y-6">
+              <p className="text-[#545454]-600 text-center">
+                {content[buttonActive - 1]?.text}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+          <MyServiceSection />
+
       {/* Services Section */}
-      <div className="mb-16 bg-white"> {/* Added margin-bottom (mb-16) and bg-white */}
-  <div className="flex justify-center items-center bg-white gap-2 mb-8">
-    <h1 className="about text-6xl text-black font-bold">OUR</h1>
-    <RotatingText
-      texts={['SERVICES']}
-      mainClassName="px-4 text-6xl font-bold text-[#f1c40f]"
-      staggerFrom="last"
-      initial={{ y: "100%" }}
-      animate={{ y: 0 }}
-      exit={{ y: "-120%" }}
-      staggerDuration={0.025}
-      splitLevelClassName="overflow-hidden"
-      transition={{ type: "spring", damping: 30, stiffness: 400 }}
-      rotationInterval={5000}
-      onRotate={(index) => setButtonActive(index + 1)}
-    />
-  </div>
-  <div className="bg-white mb-25"> {/* Ensures TextParallaxContentExample also has a white background */}
-    <TextParallaxContentExample />
-  </div>
-  <div class="h-[30vh] bg-white"></div>
-  <Example></Example>
-  <div className="bg-white mt-15">
-      <ServicesSections></ServicesSections>
-  </div>
-</div>
+      <div className="mb-16 bg-white">
+        <div className="bg-white">
+        </div>
+        <Example />
+        <div className="bg-neutral-50 mt-16">
+          <ServicesSection />
+        </div>
+              <div className="bg-neutral-50 mt-16">
+      <PartnersSection/>
+        </div>
+      </div>
+<FeatureCarousel/>
+
+
 
       {/* Contact Section */}
       <section className="bg-neutral-900 py-20 text-white">
@@ -243,9 +248,12 @@ const Home = () => {
               rows="5"
               placeholder="Your Message"
               className="w-full rounded border border-gray-700 bg-neutral-800 px-4 py-3 text-white placeholder-gray-500 focus:border-[#f1c40f] focus:outline-none"
-            ></textarea>
+            />
 
-            <button className="w-full rounded bg-[#f1c40f] px-8 py-3 text-lg font-semibold text-black transition-all hover:bg-[#e1b400]">
+            <button
+              type="button"
+              className="w-full rounded bg-[#f1c40f] px-8 py-3 text-lg font-semibold text-black transition-all hover:bg-[#e1b400]"
+            >
               Send Message
             </button>
           </form>
