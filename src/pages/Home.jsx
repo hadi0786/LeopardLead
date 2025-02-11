@@ -74,35 +74,33 @@ const Home = () => {
     <main className="bg-white-900">
       {/* Hero Section */}
       <section className="relative h-screen bg-neutral-900">
-        <video
-          autoPlay
-          loop
-          muted
-          className="h-full w-full object-cover opacity-90"
-        >
-          <source src="videos/main.mp4" type="video/mp4" />
-        </video>
+  <video autoPlay loop muted className="h-full w-full object-cover opacity-90">
+    <source src="videos/main.mp4" type="video/mp4" />
+  </video>
 
-        {/* Social Links */}
-        <div className="absolute bottom-8 left-8 z-50 flex flex-col gap-4">
-          {socialMediaLinks.map((link, index) => (
-            <a
-              key={index}
-              href={link.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center transition-all duration-300 hover:scale-110"
-            >
-              <span className="rounded-full bg-[#f1c40f] p-3 text-xl text-white transition-all duration-300 group-hover:bg-white group-hover:text-[#f1c40f]">
-                {link.icon}
-              </span>
-              <span className="ml-2 text-white opacity-0 transition-all duration-300 group-hover:opacity-100">
-                {link.name}
-              </span>
-            </a>
-          ))}
-        </div>
-      </section>
+  {/* Social Links */}
+  <div className="absolute top-1/2 left-8 z-50 flex flex-col gap-4 -translate-y-1/2">
+    {socialMediaLinks.map((link, index) => (
+      <a
+        key={index}
+        href={link.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group flex items-center transition-all duration-300 hover:scale-110"
+      >
+        <span className="rounded-full bg-[#f1c40f] p-3 text-xl text-white transition-all 
+                         duration-300 group-hover:bg-white group-hover:text-[#f1c40f]">
+          {link.icon}
+        </span>
+        <span className="ml-2 text-white opacity-0 transition-all duration-300 group-hover:opacity-100">
+          {link.name}
+        </span>
+      </a>
+    ))}
+  </div>
+</section>
+
+
 
       {width > 900 ? (
         // Desktop Version

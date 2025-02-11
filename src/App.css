@@ -98,6 +98,10 @@ align-items: center;
   font-family: 'Poppins';
 }
 
+body{
+  overflow-x: hidden;
+}
+
 .logo-nav{
   width: 120px;
 }
