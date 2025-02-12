@@ -35,17 +35,17 @@ const articles = [
 
 const RecentArticles = () => {
   return (
-    <div className="bg-gray-900 text-white py-10 px-6">
-      <h2 className="text-3xl font-bold mb-6">Recent Articles</h2>
+    <div className="bg-white text-white py-10 px-6">
+      <h2 className="text-6xl font-bold mb-6 text-black text-center">RECENT ARTICLES</h2>
       <div className="flex space-x-6 overflow-x-auto scrollbar-hide">
         {articles.map((article) => (
           <div
             key={article.id}
-            className="w-72 bg-gray-800 rounded-lg shadow-lg overflow-hidden"
+            className="w-72 bg-black bg-opacity-80 rounded-lg shadow-lg overflow-hidden"
           >
             <div className="relative">
               <img src={article.image} alt={article.title} className="w-full h-40 object-cover" />
-              <div className="absolute top-2 left-2 bg-blue-500 text-xs text-white px-2 py-1 rounded">{article.tag}</div>
+              <div className="absolute top-2 left-2 bg-[#F1C50E] text-xs text-white px-2 py-1 rounded">{article.tag}</div>
               <div className="absolute top-2 right-2 bg-gray-700 text-xs text-white px-2 py-1 rounded">{article.category}</div>
             </div>
             <div className="p-4">

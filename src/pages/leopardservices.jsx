@@ -22,21 +22,6 @@ const ServicesSections = () => {
       category: 'Branding',
       image: 'https://img.freepik.com/free-photo/vibrant-meadow-multi-colored-flowers-summer-generated-by-ai_24640-130988.jpg?uid=R42368991&ga=GA1.1.1323476453.1725247658&semt=ais_incoming'
     },
-    { 
-      title: 'Cloud Migration', 
-      category: 'Cloud Solutions',
-      image: 'https://img.freepik.com/free-photo/spectral-light-illuminates-transparent-red-colored-red-roses-abstract-flower-art-generative-ai_157027-1729.jpg?uid=R42368991&ga=GA1.1.1323476453.1725247658&semt=ais_incoming'
-    },
-    { 
-      title: 'Dashboard UI Kit', 
-      category: 'UI/UX Design',
-      image: 'https://img.freepik.com/free-photo/natures-beauty-close-up-purple-wildflowers-bloom-generative-ai_188544-8591.jpg?uid=R42368991&ga=GA1.1.1323476453.1725247658&semt=ais_incoming'
-    },
-    { 
-      title: 'AI Analytics', 
-      category: 'Cloud Solutions',
-      image: 'https://img.freepik.com/free-photo/colorful-flower-is-displayed-black-background_1340-23726.jpg?uid=R42368991&ga=GA1.1.1323476453.1725247658&semt=ais_incoming'
-    },
   ];
 
   return (

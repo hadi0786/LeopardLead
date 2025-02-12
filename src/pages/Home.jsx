@@ -189,13 +189,13 @@ const Home = () => {
         </div>
       )}
           <MyServiceSection />
-          <ExperienceCard></ExperienceCard>
 
       {/* Services Section */}
       <div className="mb-16 bg-white">
         <div className="bg-white">
         </div>
         <HeroSection/>
+        <ExperienceCard></ExperienceCard>
         {/* <Example /> */}
         <div className="bg-neutral-50 mt-16">
           <ServicesSection />
