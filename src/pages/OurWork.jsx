@@ -1,213 +1,60 @@
-import React, { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { BlurFadeDemo } from "./components/PluginComponents/Images";
-const slider1 =
-  "https://www.futurextechnologies.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdpg0nq9ss%2Fimage%2Fupload%2Fv1669728035%2FFutureX%2Fseerat2_pdjwoe.jpg&w=828&q=75";
-const slider2="https://www.futurextechnologies.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdpg0nq9ss%2Fimage%2Fupload%2Fv1669384675%2FFutureX%2Fcraftedbeds_cl9ch8.jpg&w=828&q=75"
-const transparent="https://t3.ftcdn.net/jpg/02/96/05/52/360_F_296055218_RXc721N9fSYIz3sEV7QALYquMVP31jdJ.jpg" 
+import React from "react";
 
-const Work = () => {
-  const [active,setActive]=useState(1)
-  const activeCount=(num)=>{
-setActive(num)
-  }
-  const textRef = useRef(null);
+const works = [
+  {
+    id: 1,
+    title: "Designing A Visual Hook For Business Owners",
+    description: "Open a business account today",
+    category: "Branding",
+    image: "https://img.freepik.com/free-photo/modern-smartphone-with-live-abstract-wallpaper-coming-out-screen_23-2151033614.jpg?uid=R42368991&ga=GA1.1.1323476453.1725247658&semt=ais_authors_boost",
+  },
+  {
+    id: 2,
+    title: "Feel Secure With Coinbase",
+    description: "Secure Crypto",
+    category: "Growth Marketing",
+    image: "https://img.freepik.com/free-photo/modern-smartphone-with-live-abstract-wallpaper-coming-out-screen_23-2151033614.jpg?uid=R42368991&ga=GA1.1.1323476453.1725247658&semt=ais_authors_boost",
+  },
+];
 
-  useEffect(() => {
-    const text = textRef.current;
+const filters = ["All", "Film", "Motion", "Paid Ads", "Branding", "Growth Marketing", "Influencer"];
 
-    gsap.from(text, {
-      x: -200,
-      opacity: 0,
-      duration: 1,
-      ease: "power3.out",
-      yoyo: true,
-    });
-
-    ScrollTrigger.create({
-      trigger: text,
-      start: "top 80%",
-      end: "bottom 20%",
-
-      onEnter: () => {
-        gsap.to(text, {
-          x: 0,
-          opacity: 1,
-          duration: 2,
-          ease: "power3.out",
-        });
-      },
-      onLeave: () => {
-        gsap.to(text, {
-          x: 250,
-          opacity: 1,
-          duration: 2,
-          ease: "power3.out",
-        });
-      },
-      onEnterBack: () => {
-        gsap.to(text, {
-          x: 0,
-          opacity: 1,
-          duration: 2,
-          ease: "power3.out",
-        });
-      },
-      onLeaveBack: () => {
-        gsap.to(text, {
-          x: -250,
-          opacity: 1,
-          duration: 2,
-          ease: "power3.out",
-        });
-      },
-    });
-  }, []);
+const RecentWork = () => {
   return (
-    <section className="  py-24 tracking-widest tracking-widest bg-neutral-900">
-        <div  className="line-heading animate fadein-Right  mx-auto"
-        data-delay="0.6s"
-        style={{
-          animation: "0.5s ease-out 0.6s 1 normal forwards running anim",
-        }}>
-          <h3 
-             style={{ transform: "translate3d(226.393px, 0px, 0px)" }}
-          className="outline-text text-6xl text-center mb-8 font-bold text-fill-transparent text-stroke text-[#F1C40F]"
-          ref={textRef}>
-            Our Successful Projects
-          </h3>
-        </div>
-        <div className="filters text-center wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1200ms">
-								<ul className="filter-tabs filter-btns">
-									<li className={`${active===1?"active2 filter": "filter"}`} data-role="button" data-filter=".all"onClick={()=>activeCount(1)}><span>All</span></li>
-									
-																		
-									<li className={`${active===2?"active2 filter": "filter"}`} data-role="button" data-filter=".family" onClick={()=>activeCount(2)}><span>Family</span></li>
-									
-																		
-									<li className={`${active===3?"active2 filter": "filter"}`} data-role="button" data-filter=".financial" onClick={()=>activeCount(3)}><span>Financial</span></li>
-									
-																		
-									<li className={`${active===4?"active2 filter": "filter"}`} data-role="button" data-filter=".insurance" onClick={()=>activeCount(4)}><span>Insurance</span></li>
-									
-																		
-									<li className={`${active===5?"active2 filter": "filter"}`} data-role="button" data-filter=".business" onClick={()=>activeCount(5)}><span>Business</span></li>
-									
-																		
-									<li className={`${active===6?"active2 filter": "filter"}`} data-role="button" data-filter=".banking" onClick={()=>activeCount(6)}><span>Banking</span></li>
-									
-																		
-								</ul>
-							</div>
-
-        <div className="py-1s0 tracking-widest ">
-          <BlurFadeDemo/>
-          {/* <SwiperSlider /> */}
-          {/* <div class="grid grid-cols-3 gap-3">
-            <div class="transform">
-              <a
-                href="https://goldenvape.co.uk/"
-                target="_blank"
-                rel="noopener noreferrer"
-              />
-              <div className="transform">
-                <div
-                  class="PortfolioItem loEHik move-up"
-                  id="portfolio-item-4"
-                >
-                  <div class="reveal-content__RevealContainer-sc-zetwe7-0 iYtsYf animation-complete">
-                    <span className="span2">
-                      <span className="span1">
-                        <img
-                          alt=""
-                          aria-hidden="true"
-                          src={transparent}
-                          className="withImg"
-                        />
-                      </span>
-                      <img
-                        alt="GoldenVape"
-                        src={slider1}
-                        decoding="async"
-                        data-nimg="intrinsic"
-                        class="PortfolioItem__NxtImage-sc-y2fm3o-0 cWjVsJ withIm2"
-                      />
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>{" "}
-            <div class="">
-              <a
-                href="https://goldenvape.co.uk/"
-                target="_blank"
-                rel="noopener noreferrer"
-              />
-              <div className="transform">
-                <div
-                  class="PortfolioItem__Item-sc-y2fm3o-5 loEHik move-up"
-                  id="portfolio-item-4"
-                >
-                  <div class="reveal-content__RevealContainer-sc-zetwe7-0 iYtsYf animation-complete">
-                    <span className="span2">
-                      <span className="span1" >
-                        <img
-                          alt=""
-                          aria-hidden="true"
-                          src={transparent}
-                          className="withImg"
-                        />
-                      </span>
-                      <img
-                        alt="GoldenVape"
-                        src={slider2}
-                        decoding="async"
-                        data-nimg="intrinsic"
-                        class="PortfolioItem__NxtImage-sc-y2fm3o-0 cWjVsJ withIm2"
-                      />
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>{" "}
-            <div class="">
-              <a
-                href="https://goldenvape.co.uk/"
-                target="_blank"
-                rel="noopener noreferrer"
-              />
-              <div className="transform">
-                <div
-                  class="PortfolioItem__Item-sc-y2fm3o-5 loEHik move-up"
-                  id="portfolio-item-4"
-                >
-                  <div class="reveal-content__RevealContainer-sc-zetwe7-0 iYtsYf animation-complete">
-                    <span className="span2">
-                      <span className="span1">
-                        <img
-                          alt=""
-                          aria-hidden="true"
-                          src={transparent}
-                          className="withImg"
-                        />
-                      </span>
-                      <img
-                        alt="GoldenVape"
-                        src={slider1}
-                        decoding="async"
-                        data-nimg="intrinsic"
-                        class="PortfolioItem__NxtImage-sc-y2fm3o-0 cWjVsJ withIm2"
-                      />
-                    </span>
-                  </div>
-                </div>
-              </div>
+    <div className="bg-white text-black py-10 px-5 ">
+      <h2 className="text-3xl font-bold mb-4">Recent work</h2>
+      <p className="text-gray-400 mb-6 max-w-2xl">
+        The latest creative, campaign, motion graphics, design, and growth marketing work from our in-house agency studio.
+      </p>
+      <div className="flex space-x-4 mb-6">
+        {filters.map((filter) => (
+          <button key={filter} className="px-4 py-2 bg-[#F3C70E] text-white rounded-full text-sm hover:bg-gray-700">
+            {filter}
+          </button>
+        ))}
+      </div>
+      <div className="grid grid-cols-2 gap-6">
+        {works.map((work) => (
+          <div
+            key={work.id}
+            className="relative w-full h-[500px] bg-cover bg-center rounded-xl overflow-hidden shadow-lg"
+            style={{ backgroundImage: `url(${work.image})` }}
+          >
+            <div className="absolute top-4 left-4 bg-white text-black px-3 py-1 text-xs rounded-full font-semibold">
+              {work.category}
             </div>
-          </div> */}
-        </div>
-      </section>
+          </div>
+        ))}
+      </div>
+      <div className="grid grid-cols-2 gap-6 mt-4">
+        {works.map((work) => (
+          <p key={work.id} className="text-center text-black font-medium text-lg">
+            {work.title}
+          </p>
+        ))}
+      </div>
+    </div>
   );
 };
 
-export default Work;
+export default RecentWork;

@@ -1,89 +1,63 @@
-import { motion, useTransform, useScroll } from "framer-motion";
-import { useRef } from "react";
+import React from "react";
 
-const Example = () => {
+const articles = [
+  {
+    id: 1,
+    image: "https://img.freepik.com/free-vector/watercolor-mountains-background_23-2149238186.jpg?uid=R42368991&ga=GA1.1.1323476453.1725247658&semt=ais_authors_boost",
+    tag: "DTC",
+    category: "Brand",
+    title: "The Cult of Water. How Liquid Death's Marketing Team Stole Our Attention",
+    author: "Mulenga Agley",
+    date: "Jan 30, 2025",
+    readTime: "1 min read",
+  },
+  {
+    id: 2,
+    image: "https://img.freepik.com/free-vector/natural-background-with-gradient-tropical-forest-landscape_23-2148274902.jpg?uid=R42368991&ga=GA1.1.1323476453.1725247658&semt=ais_authors_boost",
+    tag: "TikTok",
+    category: "Growthcurve",
+    title: "2025 Gen Zalpha Tiktok Trend Report",
+    author: "Growthcurve",
+    date: "Jan 10, 2025",
+    readTime: "12 min read",
+  },
+  {
+    id: 3,
+    image: "https://img.freepik.com/free-photo/futuristic-moon-background_23-2150930892.jpg?uid=R42368991&ga=GA1.1.1323476453.1725247658&semt=ais_authors_boost",
+    tag: "Growth",
+    category: "Growth Marketing",
+    title: "Mastering Market Entry - Comprehensive, Data-Driven Strategies for US Expansion and Beyond",
+    author: "Jay Mokashi",
+    date: "Jan 09, 2025",
+    readTime: "10 min read",
+  },
+];
+
+const RecentArticles = () => {
   return (
-    <div className="bg-neutral-800">
-      <div className="flex h-48 items-center justify-center">
-        <span className="font-semibold uppercase text-neutral-500">
-          Blogs
-        </span>
+    <div className="bg-gray-900 text-white py-10 px-6">
+      <h2 className="text-3xl font-bold mb-6">Recent Articles</h2>
+      <div className="flex space-x-6 overflow-x-auto scrollbar-hide">
+        {articles.map((article) => (
+          <div
+            key={article.id}
+            className="w-72 bg-gray-800 rounded-lg shadow-lg overflow-hidden"
+          >
+            <div className="relative">
+              <img src={article.image} alt={article.title} className="w-full h-40 object-cover" />
+              <div className="absolute top-2 left-2 bg-blue-500 text-xs text-white px-2 py-1 rounded">{article.tag}</div>
+              <div className="absolute top-2 right-2 bg-gray-700 text-xs text-white px-2 py-1 rounded">{article.category}</div>
+            </div>
+            <div className="p-4">
+              <h3 className="text-lg font-semibold">{article.title}</h3>
+              <p className="text-sm text-gray-400 mt-2">{article.author}</p>
+              <p className="text-xs text-gray-500">{article.date} • {article.readTime}</p>
+            </div>
+          </div>
+        ))}
       </div>
-      <HorizontalScrollCarousel />
     </div>
   );
 };
 
-const HorizontalScrollCarousel = () => {
-  const targetRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-  });
-
-  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-95%"]);
-
-  return (
-    <section ref={targetRef} className="relative h-[300vh] bg-neutral-900">
-      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-        <motion.div style={{ x }} className="flex gap-4">
-          {cards.map((card) => {
-            return <Card card={card} key={card.id} />;
-          })}
-        </motion.div>
-      </div>
-    </section>
-  );
-};
-
-const Card = ({ card }) => {
-    return (
-      <motion.div
-        whileHover={{ y: -10 }}
-        transition={{ type: "spring", stiffness: 300 }}
-        className="group relative h-[450px] w-[350px] overflow-hidden rounded-2xl shadow-xl shadow-black/30"
-      >
-        <div
-          style={{
-            backgroundImage: `url(${card.url})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-          className="absolute inset-0 z-0 transition-transform duration-500 group-hover:scale-110"
-        />
-        
-        {/* Dark gradient overlay */}
-        <div className="absolute inset-0 z-10 bg-gradient-to-t from-neutral-900/80 to-neutral-900/20" />
-        
-        <div className="absolute inset-0 z-20 flex flex-col justify-end p-6">
-          <span className="mb-2 text-xs font-bold uppercase tracking-widest text-neutral-300">
-            {card.category}
-          </span>
-          <h3 className="text-3xl font-bold text-white">{card.title}</h3>
-        </div>
-      </motion.div>
-    );
-  };
-  
-  export default Example;
-
-const cards = [
-    {
-      url: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      title: "Future Tech",
-      category: "Technology",
-      id: 1,
-    },
-    {
-      url: "https://images.unsplash.com/photo-1530893609608-32a9af3aa95c?q=80&w=2564&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      title: "Space Exploration",
-      category: "Science",
-      id: 2,
-    },
-    {
-      url: "https://images.unsplash.com/photo-1504610926078-a1611febcad3?q=80&w=2416&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      title: "Modern Art",
-      category: "Culture",
-      id: 3,
-    },
-    // ... (rest of the cards with added category property)
-  ];
+export default RecentArticles;

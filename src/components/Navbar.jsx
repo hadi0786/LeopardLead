@@ -10,7 +10,7 @@ const navOptions = [
   { path: "/about", text: "About" },
   { path: "/services", text: "Services" },
   { path: "/ourWork", text: "Projects" },
-  { path: "/SAAS-Solutions", text: "SAAS Solutions" },
+  { path: "/saas-solution", text: "SAAS Solutions" },
   { path: "/blogs", text: "Blogs" },
 ];
 
@@ -86,7 +86,7 @@ const Navbar = () => {
           <nav className="flex w-full justify-between items-center container mx-auto h-28 px-8">
             {/* Increased logo size */}
             <img
-              src="/images/logo.png"
+              src="/images/logo1.png"
               className="logo-nav animate_01 object-contain transition-transform duration-300 hover:scale-110 cursor-pointer"
               alt="Logo"
             />
