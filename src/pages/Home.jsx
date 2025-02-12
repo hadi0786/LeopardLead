@@ -179,7 +179,7 @@ const Home = () => {
                     onRotate={(index) => setButtonActive(index + 1)}
                   />
                 </div>
-                <div className="mt-4 text-4xl text-[#545454]-600 max-w-6xl mx-auto">
+                <div className="mt-4 text-3xl text-[#545454]-600 max-w-6xl mx-auto">
                   {content[buttonActive - 1]?.text}
                 </div>
               </div>
