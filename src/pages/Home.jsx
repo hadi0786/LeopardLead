@@ -77,15 +77,14 @@ const Home = () => {
 
   return (
     <main className="bg-white-900">
-      <MarketingSection></MarketingSection>
       {/* Hero Section */}
-      {/* <section className="relative h-screen bg-neutral-900">
+      <section className="relative h-screen bg-neutral-900">
   <video autoPlay loop muted className="h-full w-full object-cover opacity-90">
     <source src="videos/main.mp4" type="video/mp4" />
-  </video> */}
+  </video> 
 
   {/* Social Links */}
-  {/* <div className="absolute top-1/2 left-8 z-50 flex flex-col gap-4 -translate-y-1/2">
+  <div className="absolute top-1/2 left-8 z-50 flex flex-col gap-4 -translate-y-1/2">
     {socialMediaLinks.map((link, index) => (
       <a
         key={index}
@@ -104,7 +103,7 @@ const Home = () => {
       </a>
     ))}
   </div>
-</section> */}
+</section> 
       {width > 900 ? (
         // Desktop Version
         <div className="flex md:flex-row flex-col bg-white items-center text-center">
