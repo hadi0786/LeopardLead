@@ -3,9 +3,13 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import React, { useEffect, useRef, useState } from "react";
 import "../Styles/home.css";
+import MarketingSection from "./MarketingHome";
 import Example from "./Blogs";
+import ReviewsSection from "./components/Reviews";
+import HeroSection from "./hero";
 import FeatureCarousel from "./whychooseus";
 import PartnersSection from "./brands";
+import ExperienceCard from "./SAAS";
 import {
   FaFacebook,
   FaGithub,
@@ -17,6 +21,7 @@ import useWindowSize from "../windowsize";
 import MyServiceSection from "./myservices";
 import ServicesSection from "./leopardservices";
 import RotatingText from "../components/ui/RotatingText";
+import RecentArticles from "./Articles";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -72,14 +77,15 @@ const Home = () => {
 
   return (
     <main className="bg-white-900">
+      <MarketingSection></MarketingSection>
       {/* Hero Section */}
-      <section className="relative h-screen bg-neutral-900">
+      {/* <section className="relative h-screen bg-neutral-900">
   <video autoPlay loop muted className="h-full w-full object-cover opacity-90">
     <source src="videos/main.mp4" type="video/mp4" />
-  </video>
+  </video> */}
 
   {/* Social Links */}
-  <div className="absolute top-1/2 left-8 z-50 flex flex-col gap-4 -translate-y-1/2">
+  {/* <div className="absolute top-1/2 left-8 z-50 flex flex-col gap-4 -translate-y-1/2">
     {socialMediaLinks.map((link, index) => (
       <a
         key={index}
@@ -98,10 +104,7 @@ const Home = () => {
       </a>
     ))}
   </div>
-</section>
-
-
-
+</section> */}
       {width > 900 ? (
         // Desktop Version
         <div className="flex md:flex-row flex-col bg-white items-center text-center">
@@ -186,22 +189,21 @@ const Home = () => {
         </div>
       )}
           <MyServiceSection />
+          <ExperienceCard></ExperienceCard>
 
       {/* Services Section */}
       <div className="mb-16 bg-white">
         <div className="bg-white">
         </div>
-        <Example />
+        <HeroSection/>
+        {/* <Example /> */}
         <div className="bg-neutral-50 mt-16">
           <ServicesSection />
-        </div>
-              <div className="bg-neutral-50 mt-16">
-      <PartnersSection/>
         </div>
       </div>
 <FeatureCarousel/>
 
-
+<RecentArticles></RecentArticles>
 
       {/* Contact Section */}
       <section className="bg-neutral-900 py-20 text-white">

@@ -1,0 +1,27 @@
+.leopard-leads {
+    width: 100%;
+    color: #F2C50E; /* Gold/Yellow Color */
+    text-align: center;
+  }
+  
+  .leopard-leads h1 {
+    font-size: 4.5rem; /* Default for mobile (text-4xl) */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em; /* Similar to tracking-wide */
+  }
+  
+  /* Medium screens (md) */
+  @media (min-width: 768px) {
+    .leopard-leads h1 {
+      font-size: 3rem; /* md:text-5xl */
+    }
+  }
+  
+  /* Large screens (lg) */
+  @media (min-width: 1024px) {
+    .leopard-leads h1 {
+      font-size: 6rem; /* lg:text-9xl */
+    }
+  }
+  

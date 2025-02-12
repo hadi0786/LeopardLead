@@ -82,7 +82,7 @@ const Navbar = () => {
   return (
     <>
       {width > 900 && (
-        <header className="w-full font-poppins z-50 bg-black hover:bg-black backdrop-blur-lg transition-all duration-300 border-b border-black/15">
+        <header className="w-full font-poppins z-50 text-black border-b border-gray-200">
           <nav className="flex w-full justify-between items-center container mx-auto h-28 px-8">
             {/* Increased logo size */}
             <img
@@ -95,7 +95,7 @@ const Navbar = () => {
               {navOptions.map((ele, index) => (
                 <NavLink
                   to={ele.path}
-                  className="animate_02 relative group text-white/90 hover:text-[#f1c40f] transition-all duration-300 px-3 py-2"
+                  className="animate_02 relative group text-black hover:text-[#f1c40f] transition-all duration-300 px-3 py-2"
                   key={index}
                   onMouseEnter={() => ele.path === "/services" && setShowHover(true)}
                   onMouseLeave={() => ele.path === "/services" && setShowHover(false)}

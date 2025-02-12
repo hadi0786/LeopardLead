@@ -44,8 +44,8 @@ const ServicesSections = () => {
       <div className="max-w-7xl mx-auto">
 
         {/* Title */}
-        <h2 className="text-4xl font-bold font-[Poppins] text-black text-center dark:text-white mb-12">
-          Delivering excellence across a portfolio of successful projects!
+        <h2 className="text-6xl font-bold font-[Poppins] text-black text-center dark:text-white mb-12">
+          RECENT PROJECTS
         </h2>
 
         {/* Filters */}
