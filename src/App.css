@@ -44,6 +44,38 @@
   margin-right: 2rem;       /* Space between repeated phrases */
 }
 
+/* For Webkit Browsers (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 5px; /* Thin scrollbar */
+  height: 5px; /* Horizontal scrollbar */
+  background: transparent; /* Initially hidden */
+}
+
+/* Scrollbar track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Scrollbar handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 100, 100, 0.4); /* Light gray handle */
+  border-radius: 10px;
+  visibility: hidden; /* Hidden by default */
+  transition: background 0.3s ease;
+}
+
+/* Show scrollbar on hover */
+:hover::-webkit-scrollbar-thumb {
+  visibility: visible;
+  background: rgba(100, 100, 100, 0.7); /* Darker handle on hover */
+}
+
+/* Optional: Scrollbar corners */
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+
 /* Animation for scrolling left */
 .marquee-left .marquee__inner {
   animation: marqueeLeft 150s linear infinite;
@@ -103,5 +135,5 @@ body{
 }
 
 .logo-nav{
-  width: 120px;
+  width: 180px;
 }

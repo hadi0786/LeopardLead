@@ -1,18 +1,10 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import Button from "../pages/BlogComponents/Button";
 import useWindowSize from "../windowsize";
-
-const navOptions = [
-  { path: "/", text: "Home" },
-  { path: "/about", text: "About" },
-  { path: "/services", text: "Services" },
-  { path: "/ourWork", text: "Projects" },
-  { path: "/saas-solution", text: "SAAS Solutions" },
-  { path: "/blogs", text: "Blogs" },
-];
 
 const servicesList = [
   {
@@ -48,164 +40,330 @@ const servicesList = [
   },
 ];
 
+const saasSolutions = [
+  {
+    title: "SAAS Products",
+    icon: "fas fa-cloud",
+    items: [
+      { title: "CRM Solutions", icon: "fas fa-users-cog", link: "/saas/solutions" },
+      { title: "ERP Systems", icon: "fas fa-chart-line", link: "/saas/solutions" }
+    ]
+  },
+  {
+    title: "Pricing Models",
+    icon: "fas fa-tags",
+    items: [
+      { title: "Subscription Plans", icon: "fas fa-calendar-alt", link: "/saas/pricing" },
+      { title: "Custom Pricing", icon: "fas fa-handshake", link: "/saas/pricing" }
+    ]
+  }
+];
+
+const navOptions = [
+  { path: "/", text: "Home" },
+  { path: "/about", text: "About" },
+  { 
+    text: "Services",
+    subItems: servicesList
+  },
+  { path: "/ourWork", text: "Projects" },
+  { 
+    text: "SAAS Solutions",
+    subItems: saasSolutions
+  },
+  { path: "/blogs", text: "Blogs" },
+];
+
 const Navbar = () => {
-  const [active, setActive] = useState(1);
+  const [activeService, setActiveService] = useState(0);
+  const [activeSaas, setActiveSaas] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
-  const [showHover, setShowHover] = useState(false);
+  const [showServices, setShowServices] = useState(false);
+  const [showSaas, setShowSaas] = useState(false);
   const navigation = useNavigate();
   const { width } = useWindowSize();
 
   useGSAP(() => {
-    gsap.from(".animate_01", { y: -100, duration: 0.8, ease: "power4.out" });
-    gsap.from(".animate_02", {
+    gsap.from(".nav-logo", {
+      y: -100,
+      duration: 0.8,
+      ease: "elastic.out(1, 0.5)",
+      delay: 0.2
+    });
+    
+    gsap.from(".nav-item", {
       y: -100,
       duration: 0.6,
       stagger: 0.1,
-      ease: "back.out(1.7)"
+      ease: "power4.out",
+      delay: 0.4
     });
-    gsap.from(".animate_03", { opacity: 0, duration: 1.5 });
+
+    gsap.from(".nav-cta", {
+      opacity: 0,
+      scale: 0.8,
+      duration: 1,
+      ease: "back.out(1.7)",
+      delay: 0.6
+    });
   });
 
-  const activeService = servicesList[active - 1];
-
-  const getIconForRoute = (path) => {
-    switch(path) {
-      case '/': return 'fa-home';
-      case '/about': return 'fa-info-circle';
-      case '/services': return 'fa-cogs';
-      case '/ourWork': return 'fa-briefcase';
-      case '/blogs': return 'fa-blog';
-      default: return 'fa-link';
+  const handleDropdown = useCallback((type, show) => {
+    if (type === 'services') {
+      setShowServices(show);
+      setShowSaas(false);
+    } else {
+      setShowSaas(show);
+      setShowServices(false);
     }
-  };
+  }, []);
+
+  const getIconForRoute = useCallback((path) => {
+    const icons = {
+      '/': 'fa-home',
+      '/about': 'fa-info-circle',
+      '/services': 'fa-cogs',
+      '/ourWork': 'fa-briefcase',
+      '/blogs': 'fa-blog',
+      '/saas/solutions': 'fa-cloud',
+      '/saas/pricing': 'fa-tag'
+    };
+    return icons[path] || 'fa-link';
+  }, []);
 
   return (
     <>
       {width > 900 && (
-        <header className="w-full font-poppins z-50 text-black border-b border-gray-200">
-          <nav className="flex w-full justify-between items-center container mx-auto h-28 px-8">
-            {/* Increased logo size */}
-            <img
+        <header className="w-full font-poppins z-50 bg-white/80 backdrop-blur-lg border-b border-gray-200 shadow-sm">
+          <nav className="flex w-full justify-between items-center container mx-auto h-24 px-8">
+            <motion.img
               src="/images/logo1.png"
-              className="logo-nav animate_01 object-contain transition-transform duration-300 hover:scale-110 cursor-pointer"
+              className="nav-logo w-40 object-contain transition-transform duration-300 hover:scale-105 cursor-pointer"
               alt="Logo"
+              whileHover={{ rotate: [0, -5, 5, 0] }}
+              transition={{ duration: 0.6 }}
             />
 
-            <section className="flex gap-10 items-center h-full">
+            <section className="flex gap-8 items-center h-full">
               {navOptions.map((ele, index) => (
-                <NavLink
-                  to={ele.path}
-                  className="animate_02 relative group text-black hover:text-[#f1c40f] transition-all duration-300 px-3 py-2"
+                <div
                   key={index}
-                  onMouseEnter={() => ele.path === "/services" && setShowHover(true)}
-                  onMouseLeave={() => ele.path === "/services" && setShowHover(false)}
+                  className="relative group"
+                  onMouseEnter={() => ele.subItems && handleDropdown(ele.text.toLowerCase().includes('services') ? 'services' : 'saas', true)}
+                  onMouseLeave={() => ele.subItems && handleDropdown(ele.text.toLowerCase().includes('services') ? 'services' : 'saas', false)}
                 >
-                  {ele.text}
-                  <span className="absolute -bottom-1 left-1/2 w-0 h-[2px] bg-[#f1c40f] transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
-                </NavLink>
+                  <NavLink
+                    to={ele.path || "#"}
+                    className="nav-item relative text-gray-700 hover:text-[#f1c40f] transition-all duration-300 px-3 py-2 flex items-center group"
+                  >
+                    <span className="relative z-10">
+                      {ele.text}
+                      {ele.subItems && (
+                        <i className="fas fa-chevron-down text-xs ml-2 transition-transform group-hover:rotate-180"></i>
+                      )}
+                    </span>
+                    <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#f1c40f] to-[#ffd700] scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
+                  </NavLink>
+
+                  <AnimatePresence>
+                    {ele.text === "Services" && showServices && (
+                      <motion.div
+                        className="absolute top-full left-0 w-[800px] bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-100 mt-2"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="p-6">
+                          <div className="grid grid-cols-4 gap-6">
+                            <div className="col-span-1 border-r border-gray-200 pr-6">
+                              <h3 className="text-2xl font-bold bg-gradient-to-r from-[#f1c40f] to-[#ffd700] bg-clip-text text-transparent mb-4">
+                                Our Services
+                              </h3>
+                              <ul className="space-y-3">
+                                {servicesList.map((service, index) => (
+                                  <motion.li 
+                                    key={index}
+                                    className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-colors ${
+                                      activeService === index
+                                        ? 'bg-gradient-to-r from-[#f1c40f]/10 to-[#ffd700]/05 border border-[#f1c40f]/20'
+                                        : 'hover:bg-gray-50'
+                                    }`}
+                                    onMouseEnter={() => setActiveService(index)}
+                                    whileHover={{ x: 5 }}
+                                  >
+                                    <i className={`${service.icon} text-lg text-[#f1c40f] w-6`}></i>
+                                    <span className="text-gray-700 font-medium">{service.title}</span>
+                                  </motion.li>
+                                ))}
+                              </ul>
+                            </div>
+
+                            <div className="col-span-3 pl-6">
+                              <div className="grid grid-cols-3 gap-4">
+                                {servicesList[activeService]?.items?.map((item, index) => (
+                                  <motion.a 
+                                    key={index}
+                                    href={item.link}
+                                    className="group p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200 hover:border-[#f1c40f]/30 relative"
+                                    whileHover={{ y: -5 }}
+                                  >
+                                    <div className="flex items-center gap-3 mb-3">
+                                      <i className={`${item.icon} text-2xl text-[#f1c40f] group-hover:scale-110 transition-transform`}></i>
+                                      <h4 className="text-lg font-semibold text-gray-800">{item.title}</h4>
+                                    </div>
+                                    <p className="text-sm text-gray-600 leading-relaxed">
+                                      Professional {item.title} services with modern solutions and expert implementation.
+                                    </p>
+                                  </motion.a>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  <AnimatePresence>
+                    {ele.text === "SAAS Solutions" && showSaas && (
+                      <motion.div
+                        className="absolute top-full left-0 w-[600px] bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-100 mt-2"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="p-6">
+                          <div className="grid grid-cols-2 gap-6">
+                            <div className="col-span-1 border-r border-gray-200 pr-6">
+                              <h3 className="text-2xl font-bold bg-gradient-to-r from-[#f1c40f] to-[#ffd700] bg-clip-text text-transparent mb-4">
+                                SAAS Solutions
+                              </h3>
+                              <ul className="space-y-3">
+                                {saasSolutions.map((solution, index) => (
+                                  <motion.li 
+                                    key={index}
+                                    className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-colors ${
+                                      activeSaas === index
+                                        ? 'bg-gradient-to-r from-[#f1c40f]/10 to-[#ffd700]/05 border border-[#f1c40f]/20'
+                                        : 'hover:bg-gray-50'
+                                    }`}
+                                    onMouseEnter={() => setActiveSaas(index)}
+                                    whileHover={{ x: 5 }}
+                                  >
+                                    <i className={`${solution.icon} text-lg text-[#f1c40f] w-6`}></i>
+                                    <span className="text-gray-700 font-medium">{solution.title}</span>
+                                  </motion.li>
+                                ))}
+                              </ul>
+                            </div>
+
+                            <div className="col-span-1 pl-6">
+                              <div className="grid grid-cols-1 gap-4">
+                                {saasSolutions[activeSaas]?.items?.map((item, index) => (
+                                  <motion.a 
+                                    key={index}
+                                    href={item.link}
+                                    className="group p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200 hover:border-[#f1c40f]/30 relative"
+                                    whileHover={{ y: -5 }}
+                                  >
+                                    <div className="flex items-center gap-3 mb-3">
+                                      <i className={`${item.icon} text-2xl text-[#f1c40f] group-hover:scale-110 transition-transform`}></i>
+                                      <h4 className="text-lg font-semibold text-gray-800">{item.title}</h4>
+                                    </div>
+                                    <p className="text-sm text-gray-600 leading-relaxed">
+                                      Custom {item.title} solutions tailored to your business needs.
+                                    </p>
+                                  </motion.a>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               ))}
 
               <Button
                 title={"Let's Start Project"}
                 onClick={() => navigation("/contact-us")}
-                className="animate_02 relative overflow-hidden group px-8 py-3 rounded-full bg-gradient-to-r from-[#f1c40f] to-[#ffd700] text-black font-bold hover:shadow-xl hover:shadow-yellow-500/30 transition-all duration-300"
+                className="nav-cta relative overflow-hidden group px-6 py-3 rounded-full bg-gradient-to-r from-[#f1c40f] to-[#ffd700] text-black font-bold hover:shadow-xl hover:shadow-yellow-500/30 transition-all duration-300 hover:-translate-y-0.5"
               >
-                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <span className="relative z-10">Let's Start Project</span>
+                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <span className="relative z-10 flex items-center gap-2">
+                  <i className="fas fa-rocket text-sm" />
+                  Let's Start Project
+                </span>
               </Button>
             </section>
           </nav>
-
-          {/* Services Dropdown */}
-          {showHover && (
-            <div className="w-full bg-black/30 backdrop-blur-xl border-t border-gray/30 shadow-2xl">
-              <div className="max-w-7xl mx-auto px-8 py-8">
-                <div className="grid grid-cols-4 gap-8">
-                  <div className="col-span-1 border-r border-gray-700 pr-8">
-                    <h3 className="text-3xl font-bold bg-gradient-to-r from-[#f1c40f] to-[#ffd700] bg-clip-text text-transparent mb-6">
-                      Our Services
-                    </h3>
-                    <ul className="space-y-4">
-                      {servicesList.map((service, index) => (
-                        <li 
-                          key={index}
-                          className={`flex items-center space-x-3 p-3 rounded-xl cursor-pointer transition-all ${
-                            active === index+1 
-                              ? 'bg-gradient-to-r from-[#f1c40f]/20 to-[#ffd700]/10 border border-[#f1c40f]/30'
-                              : 'hover:bg-gray-800/50'
-                          }`}
-                          onMouseEnter={() => setActive(index+1)}
-                        >
-                          <i className={`${service.icon} text-2xl text-[#f1c40f] w-8`}></i>
-                          <span className="text-white/90 text-lg font-medium">{service.title}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="col-span-3 pl-8">
-                    <div className="grid grid-cols-3 gap-6">
-                      {activeService?.items?.map((item, index) => (
-                        <a 
-                          key={index} 
-                          href={item.link}
-                          className="group p-6 bg-gray-800/50 rounded-2xl hover:bg-gradient-to-br from-[#f1c40f]/10 to-[#ffd700]/05 transition-all duration-300 border border-gray-700 hover:border-[#f1c40f]/30 relative"
-                        >
-                          <div className="absolute inset-0 bg-gradient-to-br from-[#f1c40f] to-[#ffd700] opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-2xl"></div>
-                          <div className="flex items-center space-x-4 mb-4">
-                            <i className={`${item.icon} text-3xl text-[#f1c40f] group-hover:scale-125 transition-transform duration-300`}></i>
-                            <h4 className="text-xl font-bold bg-gradient-to-r from-[#f1c40f] to-[#ffd700] bg-clip-text text-transparent">
-                              {item.title}
-                            </h4>
-                          </div>
-                          <p className="text-sm text-white/70 leading-relaxed">
-                            Professional {item.title} services with modern solutions and expert implementation.
-                          </p>
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
         </header>
       )}
 
-      {width < 900 && (
-        <nav className="bg-black z-50 border-b border-black-800">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="flex items-center justify-between h-24">
-              {/* Adjusted mobile logo size */}
+      {width <= 900 && (
+        <nav className="bg-white/95 backdrop-blur-lg border-b border-gray-200 z-50">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="flex items-center justify-between h-16">
               <img
                 src="/images/logo.png"
-                className="w-[8em] h-24 object-contain transition-transform duration-300 hover:scale-105"
+                className="w-32 object-contain"
                 alt="Logo"
               />
 
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="text-white p-3 rounded-lg hover:bg-gray-800 transition-colors"
+                className="p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
               >
-                <i className={`fas ${isOpen ? 'fa-times' : 'fa-bars'} text-2xl`}></i>
+                <i className={`fas ${isOpen ? 'fa-times' : 'fa-bars'} text-xl`} />
               </button>
             </div>
           </div>
 
-          {isOpen && (
-            <div className="fixed inset-0 bg-black backdrop-blur-lg">
-              <div className="flex flex-col items-center pt-28 space-y-6">
-                <div className="w-full max-w-md px-6 space-y-4">
+          <AnimatePresence>
+            {isOpen && (
+              <motion.div
+                className="fixed inset-0 bg-white/95 backdrop-blur-lg"
+                initial={{ opacity: 0, x: '100%' }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: '100%' }}
+                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              >
+                <div className="flex flex-col items-center pt-20 space-y-4 px-4">
                   {navOptions.map((ele, index) => (
-                    <NavLink
-                      key={index}
-                      to={ele.path}
-                      className="flex items-center text-xl text-white/90 hover:text-[#f1c40f] py-4 px-6 border-b border-gray-800 last:border-0 transition-colors"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <i className={`fas ${getIconForRoute(ele.path)} mr-4 w-6 text-center`}></i>
-                      {ele.text}
-                    </NavLink>
+                    <div key={index} className="w-full">
+                      <NavLink
+                        to={ele.path || "#"}
+                        className="flex items-center justify-between text-lg text-gray-700 py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors"
+                        onClick={() => !ele.subItems && setIsOpen(false)}
+                      >
+                        <div className="flex items-center gap-3">
+                          <i className={`fas ${getIconForRoute(ele.path)} w-5 text-center text-[#f1c40f]`} />
+                          {ele.text}
+                        </div>
+                        {ele.subItems && (
+                          <i className="fas fa-chevron-down text-xs transition-transform" />
+                        )}
+                      </NavLink>
+
+                      {ele.subItems && (
+                        <div className="ml-8 pl-3 border-l-2 border-gray-200">
+                          {ele.subItems.map((subItem, subIndex) => (
+                            <NavLink
+                              key={subIndex}
+                              to={subItem.link || subItem.path}
+                              className="flex items-center gap-3 text-gray-600 py-2 px-4 rounded-lg hover:bg-gray-50"
+                              onClick={() => setIsOpen(false)}
+                            >
+                              <i className={`fas ${getIconForRoute(subItem.path)} w-5 text-center text-[#f1c40f]/80`} />
+                              {subItem.text || subItem.title}
+                            </NavLink>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   ))}
 
                   <Button
@@ -214,12 +372,12 @@ const Navbar = () => {
                       navigation("/contact-us");
                       setIsOpen(false);
                     }}
-                    className="w-full py-4 rounded-full bg-gradient-to-r from-[#f1c40f] to-[#ffd700] text-black font-bold text-lg hover:shadow-xl hover:shadow-yellow-500/30 transition-all mt-6"
+                    className="w-full mt-4 py-3 rounded-full bg-gradient-to-r from-[#f1c40f] to-[#ffd700] text-black font-bold hover:shadow-lg transition-transform hover:scale-105"
                   />
                 </div>
-              </div>
-            </div>
-          )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </nav>
       )}
     </>

@@ -10,6 +10,7 @@ import HeroSection from "./hero";
 import FeatureCarousel from "./whychooseus";
 import PartnersSection from "./brands";
 import ExperienceCard from "./SAAS";
+import HoverEffectSection from "./animatebutton";
 import {
   FaFacebook,
   FaGithub,
@@ -76,6 +77,7 @@ const Home = () => {
   }, []);
 
   return (
+    <div>
     <main className="bg-white-900">
       {/* Hero Section */}
       <section className="relative h-screen bg-neutral-900">
@@ -164,10 +166,10 @@ const Home = () => {
 
               <div className="relative z-10 text-center">
                 <div className="flex justify-center items-center gap-2 mb-8">
-                  <h1 className="text-8xl text-[#545454] font-bold">OUR</h1>
+                  <h1 className="text-8xl mt-12 text-[#545454]">OUR</h1>
                   <RotatingText
                     texts={['MISSION', 'VISION', 'GOALS']}
-                    mainClassName="px-4 text-8xl font-bold text-[#f1c40f]"
+                    mainClassName="px-4 text-8xl mt-12 text-[#f1c40f]"
                     staggerFrom="last"
                     initial={{ y: "100%" }}
                     animate={{ y: 0 }}
@@ -175,7 +177,7 @@ const Home = () => {
                     staggerDuration={0.025}
                     splitLevelClassName="overflow-hidden"
                     transition={{ type: "spring", damping: 30, stiffness: 400 }}
-                    rotationInterval={5000}
+                    rotationInterval={6000}
                     onRotate={(index) => setButtonActive(index + 1)}
                   />
                 </div>
@@ -215,6 +217,7 @@ const Home = () => {
         </div>
         <HeroSection/>
         <ExperienceCard></ExperienceCard>
+        <HoverEffectSection></HoverEffectSection>
         {/* <Example /> */}
         <div className="bg-neutral-50 mt-16">
           <ServicesSection />
@@ -279,6 +282,7 @@ const Home = () => {
         </div>
       </section>
     </main>
+    </div>
   );
 };
 
