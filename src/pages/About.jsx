@@ -4,6 +4,7 @@ import RotatingText from "../components/ui/RotatingText";
 import HeroSection from "./hero";
 import LeadershipTeam from "./team";
 import AboutServices from "./about-services";
+import MarketingSection from "./MarketingHome";
 
 export const DrawCircleText = () => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -25,7 +26,7 @@ export const DrawCircleText = () => {
 
   return (
     <div>
-      <HeroSection></HeroSection>
+      <MarketingSection></MarketingSection>
       <LeadershipTeam></LeadershipTeam>
       <div className="grid place-content-center bg-emerald-950 px-4 py-24 text-yellow-50">
         <h1 className="max-w-2xl text-center text-5xl leading-snug">
