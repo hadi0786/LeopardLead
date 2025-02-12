@@ -36,7 +36,7 @@
 
 /* Style for the scrolling text */
 .marquee__inner span {
-  font-size: 8rem;          /* Similar to Tailwind's text-9xl */
+  font-size: 5rem;          /* Similar to Tailwind's text-9xl */
   font-weight: bold;        /* Bold text */
   line-height: 0.7;           /* No extra spacing between lines */
   opacity: 0.1;             /* 10% opacity */

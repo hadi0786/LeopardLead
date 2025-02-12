@@ -140,14 +140,34 @@ const Home = () => {
         </span>
       </div>
     </div>
+    <div class="marquee marquee-right">
+      <div class="marquee__inner">
+        <span>
+          TRANSFORMING · TRANSFORMING · TRANSFORMING · TRANSFORMING · TRANSFORMING ·
+        </span>
+        <span>
+          TRANSFORMING · TRANSFORMING · TRANSFORMING · TRANSFORMING · TRANSFORMING ·
+        </span>
+      </div>
+    </div>
+    <div class="marquee marquee-left">
+      <div class="marquee__inner">
+        <span>
+          DIGITAL · DIGITAL · DIGITAL · DIGITAL · DIGITAL · DIGITAL ·
+        </span>
+        <span>
+          DIGITAL · DIGITAL · DIGITAL · DIGITAL · DIGITAL · DIGITAL ·
+        </span>
+      </div>
+    </div>
   </div>
 
               <div className="relative z-10 text-center">
                 <div className="flex justify-center items-center gap-2 mb-8">
-                  <h1 className="text-9xl text-[#545454] font-bold">OUR</h1>
+                  <h1 className="text-8xl text-[#545454] font-bold">OUR</h1>
                   <RotatingText
                     texts={['MISSION', 'VISION', 'GOALS']}
-                    mainClassName="px-4 text-9xl font-bold text-[#f1c40f]"
+                    mainClassName="px-4 text-8xl font-bold text-[#f1c40f]"
                     staggerFrom="last"
                     initial={{ y: "100%" }}
                     animate={{ y: 0 }}
